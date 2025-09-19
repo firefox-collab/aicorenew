@@ -284,6 +284,109 @@
             color: #27ae60;
         }
 
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+            background: #f8f8f6;
+        }
+
+        .contact-title {
+            font-size: 2.5rem;
+            color: #27ae60;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .contact-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .contact-form {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+            background: #f9f9f9;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #27ae60;
+            background: white;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+            margin-top: 2px;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #27ae60;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #219a52;
+        }
+
         .about-image {
             position: relative;
         }
@@ -355,6 +458,18 @@
 
             .team-image {
                 height: 300px;
+            }
+
+            .contact-form {
+                padding: 30px 20px;
+            }
+
+            .contact-title {
+                font-size: 2rem;
+            }
+
+            .contact-subtitle {
+                font-size: 1.1rem;
             }
         }
     </style>
@@ -429,7 +544,6 @@
                     <p class="about-description">
                         At AI CORE IT SOLUTIONS, we are a dedicated team of professionals focused on delivering reliable and innovative IT solutions tailored to your needs. We specialize in helping entrepreneurs and SMEs achieve stability, connectivity, and growth through our comprehensive range of services, including IT equipment supply, CCTV & biometrics, structured cabling, UPS systems, and more. Our commitment to integrity, teamwork, and exceptional client partnerships drives us to continuously improve and provide cost-effective solutions that elevate your business.
                     </p>
-                    <a href="#contact" class="get-in-touch-btn">Get in touch</a>
                 </div>
                 <div class="about-image">
                     <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop" alt="Professional team working together" class="team-image">
@@ -438,6 +552,42 @@
         </div>
     </section>
 
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="contact-title">Get in touch</h2>
+            <p class="contact-subtitle">We're here to assist you!</p>
+            
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name">Name <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email address <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" placeholder="email@website.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone number <span class="required">*</span></label>
+                    <input type="tel" id="phone" name="phone" placeholder="555-555-5555" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="6" placeholder="Your message here..."></textarea>
+                </div>
+                
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="consent" name="consent" required>
+                    <label for="consent">I allow this website to store my submission so they can respond to my inquiry. <span class="required">*</span></label>
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+        </div>
+    </section>
     <script>
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
