@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
+    <title>My Website - Modern & Professional</title>
     <style>
         * {
             margin: 0;
@@ -12,11 +12,12 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: #2c3e50;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .container {
@@ -27,95 +28,220 @@
 
         header {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
             color: white;
+            animation: fadeInDown 1s ease-out;
         }
 
         h1 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
+            font-size: 1.3rem;
+            opacity: 0.95;
             margin-bottom: 2rem;
+            font-weight: 300;
         }
 
         .card {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
             margin-bottom: 2rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 35px 70px rgba(0,0,0,0.2);
+        }
+
+        .hero-card {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
+        }
+
+        .hero-card h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .hero-card p {
+            font-size: 1.1rem;
+            color: #5a6c7d;
+            margin-bottom: 2rem;
+            line-height: 1.7;
         }
 
         .features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
-            margin-top: 2rem;
+            margin-top: 3rem;
         }
 
         .feature {
             text-align: center;
-            padding: 1.5rem;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .feature:hover::before {
+            left: 100%;
         }
 
         .feature-icon {
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             background: linear-gradient(135deg, #667eea, #764ba2);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1rem;
-            font-size: 1.5rem;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
             color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
         }
 
         .feature h3 {
-            color: #333;
-            margin-bottom: 0.5rem;
-            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-weight: 600;
         }
 
         .feature p {
-            color: #666;
-            line-height: 1.5;
+            color: #5a6c7d;
+            line-height: 1.6;
+            font-size: 1rem;
         }
 
         .cta-button {
             display: inline-block;
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 1rem 2rem;
+            padding: 1.2rem 2.5rem;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            font-size: 1.1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s;
         }
 
         .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat {
+            text-align: center;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         footer {
             text-align: center;
             color: white;
-            margin-top: 3rem;
-            opacity: 0.8;
+            margin-top: 4rem;
+            opacity: 0.9;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
         }
 
         @media (max-width: 768px) {
@@ -124,10 +250,33 @@
             }
             
             h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
             
             .features {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .hero-card h2 {
+                font-size: 1.8rem;
+            }
+
+            .stats {
                 grid-template-columns: 1fr;
             }
         }
@@ -137,45 +286,81 @@
     <div class="container">
         <header>
             <h1>Welcome to My Website</h1>
-            <p class="subtitle">A beautiful, modern web experience</p>
+            <p class="subtitle">Experience the future of web design</p>
         </header>
 
         <main>
-            <div class="card">
+            <div class="card hero-card">
                 <h2>Clean & Modern Design</h2>
-                <p>This webpage has been completely rebuilt with modern HTML5, CSS3, and responsive design principles. It features a clean layout, smooth animations, and works perfectly across all devices.</p>
-                <br>
+                <p>This website showcases modern web development with responsive design, smooth animations, and premium user experience. Built with the latest HTML5, CSS3, and JavaScript technologies.</p>
                 <a href="#features" class="cta-button">Explore Features</a>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Responsive</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">Fast</span>
+                    <span class="stat-label">Loading</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">Modern</span>
+                    <span class="stat-label">Design</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">2025</span>
+                    <span class="stat-label">Standards</span>
+                </div>
             </div>
 
             <div class="features" id="features">
                 <div class="card feature">
                     <div class="feature-icon">📱</div>
                     <h3>Responsive Design</h3>
-                    <p>Looks great on desktop, tablet, and mobile devices with fluid layouts and optimized typography.</p>
+                    <p>Perfectly optimized for all devices - desktop, tablet, and mobile. The layout adapts fluidly to any screen size with optimized typography and spacing.</p>
                 </div>
 
                 <div class="card feature">
                     <div class="feature-icon">⚡</div>
-                    <h3>Fast Loading</h3>
-                    <p>Optimized code and assets ensure quick loading times and smooth user experience.</p>
+                    <h3>Lightning Fast</h3>
+                    <p>Optimized code, compressed assets, and efficient loading strategies ensure blazing-fast performance and smooth user interactions.</p>
                 </div>
 
                 <div class="card feature">
                     <div class="feature-icon">🎨</div>
                     <h3>Beautiful UI</h3>
-                    <p>Modern gradient backgrounds, smooth animations, and thoughtful micro-interactions.</p>
+                    <p>Modern gradient backgrounds, glassmorphism effects, smooth animations, and carefully crafted micro-interactions create an engaging experience.</p>
+                </div>
+
+                <div class="card feature">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Secure & Reliable</h3>
+                    <p>Built with security best practices, clean code structure, and reliable performance across all modern browsers and devices.</p>
+                </div>
+
+                <div class="card feature">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Future Ready</h3>
+                    <p>Developed using the latest web standards and technologies, ensuring compatibility and performance for years to come.</p>
+                </div>
+
+                <div class="card feature">
+                    <div class="feature-icon">💎</div>
+                    <h3>Premium Quality</h3>
+                    <p>Every detail has been carefully crafted to deliver a premium user experience with attention to design, performance, and usability.</p>
                 </div>
             </div>
         </main>
 
         <footer>
-            <p>&copy; 2025 My Website. Built with modern web standards.</p>
+            <p>&copy; 2025 My Website. Crafted with modern web technologies.</p>
         </footer>
     </div>
 
     <script>
-        // Add smooth scrolling for anchor links
+        // Enhanced smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -189,7 +374,7 @@
             });
         });
 
-        // Add subtle animation on scroll
+        // Intersection Observer for animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -200,17 +385,47 @@
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('fade-in-up');
                 }
             });
         }, observerOptions);
 
-        // Observe all cards for animation
-        document.querySelectorAll('.card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(card);
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', () => {
+            // Observe all cards for scroll animations
+            document.querySelectorAll('.card').forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = `opacity 0.8s ease ${index * 0.1}s, transform 0.8s ease ${index * 0.1}s`;
+                observer.observe(card);
+            });
+
+            // Animate stats on scroll
+            document.querySelectorAll('.stat').forEach((stat, index) => {
+                stat.style.opacity = '0';
+                stat.style.transform = 'translateY(20px)';
+                stat.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+                observer.observe(stat);
+            });
         });
+
+        // Add parallax effect to background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            document.body.style.backgroundPosition = `center ${rate}px`;
+        });
+
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+            document.body.style.transform = 'translateY(0)';
+        });
+
+        // Initialize page
+        document.body.style.opacity = '0';
+        document.body.style.transform = 'translateY(20px)';
+        document.body.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
     </script>
 </body>
 </html>
