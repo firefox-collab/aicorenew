@@ -110,6 +110,21 @@ function appendAppointmentData(sheet, data) {
   sheet.autoResizeColumns(1, row.length);
 }
 
+function appendContactData(sheet, data) {
+  const row = [
+    new Date(data.timestamp),
+    data.name,
+    data.email,
+    data.phone,
+    data.message
+  ];
+  
+  sheet.appendRow(row);
+  
+  // Auto-resize columns
+  sheet.autoResizeColumns(1, row.length);
+}
+
 function appendIntakeData(sheet, data) {
   const row = [
     new Date(data.timestamp),

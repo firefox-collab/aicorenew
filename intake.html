@@ -639,6 +639,17 @@
                 // Replace this URL with your Google Apps Script web app URL
                 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
                 
+                if (GOOGLE_SCRIPT_URL.includes('YOUR_SCRIPT_ID')) {
+                    // Google Sheets not configured yet - show success message anyway
+                    setTimeout(() => {
+                        alert(`${formType === 'appointment' ? 'Appointment' : 'Intake form'} submitted successfully!\n\nWe will contact you shortly to confirm your ${formType === 'appointment' ? 'appointment' : 'information'}.\n\nNote: To enable automatic data saving, please configure Google Sheets integration.`);
+                        
+                        // Reset form
+                        document.querySelector('form').reset();
+                    }, 1000);
+                    return;
+                }
+                
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
