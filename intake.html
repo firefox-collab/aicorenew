@@ -206,9 +206,9 @@
 
         .page-title {
             background: 
-                linear-gradient(135deg, rgba(39, 174, 96, 0.9) 0%, rgba(0, 0, 0, 0.8) 100%),
-                radial-gradient(circle at 20% 80%, rgba(39, 174, 96, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(52, 152, 219, 0.3) 0%, transparent 50%),
+                linear-gradient(135deg, rgba(0, 255, 255, 0.2) 0%, rgba(0, 0, 0, 0.9) 100%),
+                radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(138, 43, 226, 0.3) 0%, transparent 50%),
                 url('https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop') center/cover;
             color: white;
             padding: 120px 0 40px 0;
@@ -225,8 +225,8 @@
             right: 0;
             bottom: 0;
             background: 
-                linear-gradient(45deg, transparent 30%, rgba(39, 174, 96, 0.1) 50%, transparent 70%),
-                linear-gradient(-45deg, transparent 30%, rgba(52, 152, 219, 0.1) 50%, transparent 70%);
+                linear-gradient(45deg, transparent 30%, rgba(0, 255, 255, 0.2) 50%, transparent 70%),
+                linear-gradient(-45deg, transparent 30%, rgba(138, 43, 226, 0.2) 50%, transparent 70%);
             animation: gradientShift 8s ease-in-out infinite;
             pointer-events: none;
         }
@@ -245,13 +245,13 @@
         .page-title h1 {
             position: relative;
             z-index: 2;
-            background: linear-gradient(45deg, #fff, #27ae60, #3498db, #fff);
+            background: linear-gradient(45deg, #00ffff, #8a2be2, #00ff00, #ff00ff, #00ffff);
             background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: heroTextGlow 4s ease-in-out infinite;
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
         }
 
         .page-title p {
@@ -262,11 +262,11 @@
         @keyframes heroTextGlow {
             0%, 100% {
                 background-position: 0% 50%;
-                filter: drop-shadow(0 0 20px rgba(39, 174, 96, 0.5));
+                filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.8));
             }
             50% {
                 background-position: 100% 50%;
-                filter: drop-shadow(0 0 30px rgba(52, 152, 219, 0.7));
+                filter: drop-shadow(0 0 30px rgba(138, 43, 226, 0.9));
             }
         }
 
@@ -337,7 +337,8 @@
         .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #27ae60;
+            border-color: #00ffff;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
         }
 
         .checkbox-group {
@@ -364,7 +365,7 @@
 
         .submit-btn {
             width: 100%;
-            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            background: linear-gradient(45deg, #00ffff, #8a2be2);
             color: white;
             padding: 12px 25px;
             border: none;
@@ -375,7 +376,7 @@
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 255, 255, 0.4);
         }
 
         .submit-btn::before {
@@ -385,14 +386,14 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
             transition: left 0.5s ease;
         }
 
         .submit-btn:hover {
-            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            background: linear-gradient(45deg, #8a2be2, #00ffff);
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+            box-shadow: 0 8px 25px rgba(0, 255, 255, 0.6);
         }
 
         .submit-btn:hover::before {
