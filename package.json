@@ -7,7 +7,14 @@
     "dev": "http-server . -p 8000 -o",
     "start": "http-server . -p 8000"
   },
-  "keywords": ["website", "static", "html"],
+  "keywords": [
+    "website",
+    "static",
+    "html"
+  ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
 }
