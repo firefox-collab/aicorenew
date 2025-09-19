@@ -1241,6 +1241,8 @@
                 }
                 
                 // Submit to Google Sheets if configured
+                console.log('Submitting data to Google Sheets:', data);
+                
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     headers: {
@@ -1249,7 +1251,14 @@
                     body: JSON.stringify(data)
                 });
                 
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                
+                const responseText = await response.text();
+                console.log('Response text:', responseText);
+                
                 const result = await response.json();
+                console.log('Parsed result:', result);
                 
                 if (result.status === 'error') {
                     throw new Error(result.message);
@@ -1263,7 +1272,13 @@
                 
             } catch (error) {
                 console.error('Error submitting contact form:', error);
-                alert('Thank you for your message!\n\nYour information has been received. We will contact you shortly.\n\nNote: ' + error.message);
+                
+                // Show detailed error for debugging
+                if (error.message.includes('JSON')) {
+                    alert('There was an error processing your submission. Please check the browser console for details and try again.\n\nError: ' + error.message);
+                } else {
+                    alert('Thank you for your message!\n\nYour information has been received. We will contact you shortly.\n\nNote: ' + error.message);
+                }
                 
                 // Reset form even on error
                 document.querySelector('.contact form').reset();

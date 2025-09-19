@@ -5,6 +5,16 @@ function doPost(e) {
   try {
     // Log the incoming request for debugging
     console.log('Received POST request');
+    console.log('Full request object:', e);
+    
+    // Check if postData exists
+    if (!e.postData || !e.postData.contents) {
+      console.error('No postData found in request');
+      return ContentService
+        .createTextOutput(JSON.stringify({status: 'error', message: 'No data received in request'}))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+    
     console.log('Request body:', e.postData.contents);
     
     // Parse the incoming data
@@ -55,8 +65,14 @@ function doPost(e) {
 
 function doGet(e) {
   // Handle GET requests for testing
+  console.log('Received GET request');
+  console.log('Parameters:', e.parameter);
   return ContentService
-    .createTextOutput('Google Apps Script is working! Use POST requests to submit form data.')
+    .createTextOutput(JSON.stringify({
+      status: 'success', 
+      message: 'Google Apps Script is working! Use POST requests to submit form data.',
+      timestamp: new Date().toISOString()
+    }))
     .setMimeType(ContentService.MimeType.TEXT);
 }
 
@@ -237,7 +253,21 @@ function testSetup() {
     
     console.log('All sheets are ready!');
     
+    // Test data submission
+    const testContactData = {
+      timestamp: new Date().toISOString(),
+      name: 'Test User',
+      email: 'test@example.com',
+      phone: '555-0123',
+      message: 'Test message',
+      type: 'Contact'
+    };
+    
+    appendContactData(contactSheet, testContactData);
+    console.log('SUCCESS: Test contact data added');
+    
   } catch (error) {
     console.log('ERROR:', error.toString());
   }
+}
 }
