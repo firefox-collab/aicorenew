@@ -231,6 +231,71 @@
             margin-bottom: 40px;
         }
 
+        /* About Section */
+        .about {
+            padding: 80px 0;
+            background: #e8e6e1;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text {
+            padding-right: 20px;
+        }
+
+        .about-title {
+            font-size: 2.5rem;
+            color: #27ae60;
+            margin-bottom: 15px;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .about-subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        .about-description {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        .get-in-touch-btn {
+            color: #666;
+            text-decoration: underline;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .get-in-touch-btn:hover {
+            color: #27ae60;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .team-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             header {
@@ -264,6 +329,32 @@
 
             .service-image {
                 height: 180px;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .about-text {
+                padding-right: 0;
+                order: 2;
+            }
+
+            .about-image {
+                order: 1;
+            }
+
+            .about-title {
+                font-size: 2rem;
+            }
+
+            .about-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .team-image {
+                height: 300px;
             }
         }
     </style>
@@ -323,6 +414,25 @@
                         <h3>Structured cabling, Fiber Optics Backbone and Wireless Solutions</h3>
                         <p>Efficient cabling systems for seamless connectivity.</p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="about-title">Innovative IT solutions</h2>
+                    <p class="about-subtitle">Empowering your business growth</p>
+                    <p class="about-description">
+                        At AI CORE IT SOLUTIONS, we are a dedicated team of professionals focused on delivering reliable and innovative IT solutions tailored to your needs. We specialize in helping entrepreneurs and SMEs achieve stability, connectivity, and growth through our comprehensive range of services, including IT equipment supply, CCTV & biometrics, structured cabling, UPS systems, and more. Our commitment to integrity, teamwork, and exceptional client partnerships drives us to continuously improve and provide cost-effective solutions that elevate your business.
+                    </p>
+                    <a href="#contact" class="get-in-touch-btn">Get in touch</a>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop" alt="Professional team working together" class="team-image">
                 </div>
             </div>
         </div>
