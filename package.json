@@ -4,8 +4,8 @@
   "description": "A modern static website",
   "main": "index.html",
   "scripts": {
-    "start": "python3 -m http.server 3000",
-    "dev": "python3 -m http.server 3000"
+    "start": "serve . -p 3000",
+    "dev": "serve . -p 3000"
   },
   "keywords": ["website", "static", "html"],
   "author": "",
