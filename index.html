@@ -1228,12 +1228,15 @@
                 
                 if (GOOGLE_SCRIPT_URL.includes('YOUR_SCRIPT_ID')) {
                     // Google Sheets not configured yet - show success message anyway
-                    setTimeout(() => {
-                        alert('Thank you for your message!\n\nYour contact information has been received. We will get back to you shortly.\n\nNote: To enable automatic data saving, please configure Google Sheets integration following the setup instructions.');
-                        
-                        // Reset form
-                        document.querySelector('.contact form').reset();
-                    }, 1000);
+                    // Show success message without network request
+                    alert('Thank you for your message!\n\nYour contact information has been received. We will get back to you shortly.\n\nNote: To enable automatic data saving, please configure Google Sheets integration following the setup instructions.');
+                    
+                    // Reset form
+                    document.querySelector('.contact form').reset();
+                    
+                    // Reset button state
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
                     return;
                 }
                 
