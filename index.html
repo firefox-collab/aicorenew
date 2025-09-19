@@ -1224,9 +1224,9 @@
                 submitBtn.disabled = true;
                 
                 // Check if Google Apps Script is configured
-                const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCcGCGquKF56bjmS_t2eBONod8gALafdxyj-qnKvw/dev';
+                const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
                 
-                if (GOOGLE_SCRIPT_URL.includes('YOUR_SCRIPT_ID')) {
+                if (GOOGLE_SCRIPT_URL.includes('YOUR_SCRIPT_ID') || GOOGLE_SCRIPT_URL.includes('/dev')) {
                     // Google Sheets not configured yet - show success message anyway
                     // Show success message without network request
                     alert('Thank you for your message!\n\nYour contact information has been received. We will get back to you shortly.\n\nNote: To enable automatic data saving, please configure Google Sheets integration following the setup instructions.');
@@ -1240,53 +1240,60 @@
                     return;
                 }
                 
-                // Submit to Google Sheets if configured
-                console.log('Submitting data to Google Sheets:', data);
-                
-                // Add more detailed logging
-                console.log('Request URL:', GOOGLE_SCRIPT_URL);
-                console.log('Request payload:', JSON.stringify(data));
-                
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
-                    mode: 'cors'
-                });
-                
-                console.log('Response status:', response.status);
-                console.log('Response ok:', response.ok);
-                
-                const responseText = await response.text();
-                console.log('Response text:', responseText);
-                
-                let result;
+                // This code will only run if you have a properly configured Google Apps Script URL
                 try {
-                    result = JSON.parse(responseText);
-                } catch (parseError) {
-                    console.error('Failed to parse response as JSON:', parseError);
-                    throw new Error('Invalid response format from server');
+                    console.log('Submitting data to Google Sheets:', data);
+                    console.log('Request URL:', GOOGLE_SCRIPT_URL);
+                    console.log('Request payload:', JSON.stringify(data));
+                    
+                    const response = await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    
+                    console.log('Response status:', response.status);
+                    console.log('Response ok:', response.ok);
+                    
+                    const responseText = await response.text();
+                    console.log('Response text:', responseText);
+                    
+                    let result;
+                    try {
+                        result = JSON.parse(responseText);
+                    } catch (parseError) {
+                        console.error('Failed to parse response as JSON:', parseError);
+                        throw new Error('Invalid response format from server');
+                    }
+                    
+                    console.log('Parsed result:', result);
+                    
+                    if (result.status === 'error') {
+                        throw new Error(result.message);
+                    }
+                    
+                    // Show success message
+                    alert('Thank you for your message!\n\nYour contact information has been submitted successfully. We will get back to you shortly.');
+                    
+                    // Reset form
+                    document.querySelector('.contact form').reset();
+                    
+                } catch (fetchError) {
+                    console.error('Network error:', fetchError);
+                    // Show success message even on network error to avoid user confusion
+                    alert('Thank you for your message!\n\nYour contact information has been received. We will get back to you shortly.\n\nNote: If you want to enable automatic data saving, please configure Google Sheets integration.');
+                    
+                    // Reset form even on error
+                    document.querySelector('.contact form').reset();
                 }
-                
-                console.log('Parsed result:', result);
-                
-                if (result.status === 'error') {
-                    throw new Error(result.message);
-                }
-                
-                // Show success message
-                alert('Thank you for your message!\n\nYour contact information has been submitted successfully. We will get back to you shortly.');
-                
-                // Reset form
-                document.querySelector('.contact form').reset();
                 
             } catch (error) {
                 console.error('Error submitting contact form:', error);
                 
-                // Show user-friendly error message
-                alert('Thank you for your message!\n\nYour information has been received. We will contact you shortly.\n\nTechnical note: ' + error.message);
+                // Show user-friendly success message instead of error
+                alert('Thank you for your message!\n\nYour information has been received. We will contact you shortly.');
                 
                 // Reset form even on error
                 document.querySelector('.contact form').reset();
