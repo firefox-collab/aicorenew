@@ -861,12 +861,69 @@
                 return;
             }
             
+            // Collect form data
             const formData = new FormData(this);
             const selectedServices = Array.from(document.querySelectorAll('input[name="services"]:checked'))
                 .map(cb => cb.nextElementSibling.textContent);
             
-            alert(`Appointment request submitted!\n\nDate: ${selectedDate.toDateString()}\nTime: ${selectedTime}\nServices: ${selectedServices.join(', ')}\n\nWe will contact you shortly to confirm your appointment.`);
+            // Prepare data for Google Sheets
+            const appointmentData = {
+                timestamp: new Date().toISOString(),
+                name: formData.get('name'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                date: selectedDate.toDateString(),
+                time: selectedTime,
+                services: selectedServices.join(', '),
+                message: formData.get('message') || '',
+                type: 'Appointment'
+            };
+            
+            // Submit to Google Sheets
+            submitToGoogleSheets(appointmentData, 'appointment');
         });
+        
+        // Function to submit data to Google Sheets
+        async function submitToGoogleSheets(data, formType) {
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            
+            try {
+                // Show loading state
+                submitBtn.textContent = 'Submitting...';
+                submitBtn.disabled = true;
+                
+                // Replace this URL with your Google Apps Script web app URL
+                const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+                
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                // Show success message
+                alert(`${formType === 'appointment' ? 'Appointment' : 'Intake form'} submitted successfully!\n\nWe will contact you shortly to confirm your ${formType === 'appointment' ? 'appointment' : 'information'}.`);
+                
+                // Reset form
+                document.querySelector('form').reset();
+                selectedDate = null;
+                selectedTime = null;
+                document.getElementById('timeSelection').style.display = 'none';
+                document.querySelectorAll('.day-cell').forEach(c => c.classList.remove('selected'));
+                
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                alert('There was an error submitting your form. Please try again or contact us directly.');
+            } finally {
+                // Reset button state
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
         
         // Service checkboxes - ensure at least one is selected
         const serviceCheckboxes = document.querySelectorAll('input[name="services"]');

@@ -581,7 +581,6 @@
 
     <script>
         // Form submission
-        // Header background change on scroll
         window.addEventListener('scroll', function() {
             const header = document.querySelector('.header');
             if (window.scrollY > 100) {
@@ -593,8 +592,72 @@
 
         document.querySelector('form').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Intake form submitted successfully! We will review your information and contact you soon.');
+            
+            // Collect form data
+            const formData = new FormData(this);
+            const selectedServices = Array.from(document.querySelectorAll('input[name="services"]:checked'))
+                .map(cb => cb.nextElementSibling.textContent);
+            const interestedServices = Array.from(document.querySelectorAll('input[name="interested-services"]:checked'))
+                .map(cb => cb.nextElementSibling.textContent);
+            
+            // Prepare data for Google Sheets
+            const intakeData = {
+                timestamp: new Date().toISOString(),
+                name: formData.get('name'),
+                email: formData.get('email'),
+                services: selectedServices.join(', '),
+                companySize: formData.get('company-size'),
+                communicationMethod: formData.get('communication-method'),
+                projectTimeline: formData.get('project-timeline'),
+                budgetRange: formData.get('budget-range'),
+                currentInfrastructure: formData.get('current-infrastructure'),
+                challenges: formData.get('challenges'),
+                interestedServices: interestedServices.join(', '),
+                additionalComments: formData.get('additional-comments'),
+                type: 'Intake'
+            };
+            
+            // Submit to Google Sheets
+            submitToGoogleSheets(intakeData, 'intake');
         });
+        
+        // Function to submit data to Google Sheets
+        async function submitToGoogleSheets(data, formType) {
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            
+            try {
+                // Show loading state
+                submitBtn.textContent = 'Submitting...';
+                submitBtn.disabled = true;
+                
+                // Replace this URL with your Google Apps Script web app URL
+                const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+                
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                // Show success message
+                alert(`${formType === 'appointment' ? 'Appointment' : 'Intake form'} submitted successfully!\n\nWe will contact you shortly to confirm your ${formType === 'appointment' ? 'appointment' : 'information'}.`);
+                
+                // Reset form
+                document.querySelector('form').reset();
+                
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                alert('There was an error submitting your form. Please try again or contact us directly.');
+            } finally {
+                // Reset button state
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
     </script>
 </body>
 </html>
