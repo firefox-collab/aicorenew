@@ -12,12 +12,11 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
             color: #2c3e50;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
         .container {
@@ -30,7 +29,6 @@
             text-align: center;
             margin-bottom: 4rem;
             color: white;
-            animation: fadeInDown 1s ease-out;
         }
 
         h1 {
@@ -38,10 +36,6 @@
             font-weight: 700;
             margin-bottom: 1rem;
             text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-            background: linear-gradient(45deg, #fff, #f0f0f0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         .subtitle {
@@ -58,18 +52,16 @@
             padding: 2.5rem;
             box-shadow: 0 25px 50px rgba(0,0,0,0.15);
             margin-bottom: 2rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .card:hover {
-            transform: translateY(-8px) scale(1.02);
+            transform: translateY(-5px);
             box-shadow: 0 35px 70px rgba(0,0,0,0.2);
         }
 
         .hero-card {
             text-align: center;
-            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
         }
 
         .hero-card h2 {
@@ -96,23 +88,6 @@
         .feature {
             text-align: center;
             padding: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
-            transition: left 0.6s;
-        }
-
-        .feature:hover::before {
-            left: 100%;
         }
 
         .feature-icon {
@@ -127,12 +102,6 @@
             font-size: 2rem;
             color: white;
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .feature:hover .feature-icon {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
         }
 
         .feature h3 {
@@ -145,7 +114,6 @@
         .feature p {
             color: #5a6c7d;
             line-height: 1.6;
-            font-size: 1rem;
         }
 
         .cta-button {
@@ -157,30 +125,13 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 1.1rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.6s;
         }
 
         .cta-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
-        }
-
-        .cta-button:hover::before {
-            left: 100%;
         }
 
         .stats {
@@ -216,32 +167,6 @@
             opacity: 0.9;
             padding: 2rem 0;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in-up {
-            animation: fadeInUp 0.8s ease-out forwards;
         }
 
         @media (max-width: 768px) {
@@ -292,7 +217,7 @@
         <main>
             <div class="card hero-card">
                 <h2>Clean & Modern Design</h2>
-                <p>This website showcases modern web development with responsive design, smooth animations, and premium user experience. Built with the latest HTML5, CSS3, and JavaScript technologies.</p>
+                <p>This website showcases modern web development with responsive design, smooth animations, and premium user experience. Built with the latest HTML5 and CSS3 technologies.</p>
                 <a href="#features" class="cta-button">Explore Features</a>
             </div>
 
@@ -319,25 +244,25 @@
                 <div class="card feature">
                     <div class="feature-icon">📱</div>
                     <h3>Responsive Design</h3>
-                    <p>Perfectly optimized for all devices - desktop, tablet, and mobile. The layout adapts fluidly to any screen size with optimized typography and spacing.</p>
+                    <p>Perfectly optimized for all devices - desktop, tablet, and mobile. The layout adapts fluidly to any screen size.</p>
                 </div>
 
                 <div class="card feature">
                     <div class="feature-icon">⚡</div>
                     <h3>Lightning Fast</h3>
-                    <p>Optimized code, compressed assets, and efficient loading strategies ensure blazing-fast performance and smooth user interactions.</p>
+                    <p>Optimized code and efficient loading strategies ensure blazing-fast performance and smooth user interactions.</p>
                 </div>
 
                 <div class="card feature">
                     <div class="feature-icon">🎨</div>
                     <h3>Beautiful UI</h3>
-                    <p>Modern gradient backgrounds, glassmorphism effects, smooth animations, and carefully crafted micro-interactions create an engaging experience.</p>
+                    <p>Modern gradient backgrounds, glassmorphism effects, and carefully crafted interactions create an engaging experience.</p>
                 </div>
 
                 <div class="card feature">
                     <div class="feature-icon">🔒</div>
                     <h3>Secure & Reliable</h3>
-                    <p>Built with security best practices, clean code structure, and reliable performance across all modern browsers and devices.</p>
+                    <p>Built with security best practices and clean code structure for reliable performance across all modern browsers.</p>
                 </div>
 
                 <div class="card feature">
@@ -349,7 +274,7 @@
                 <div class="card feature">
                     <div class="feature-icon">💎</div>
                     <h3>Premium Quality</h3>
-                    <p>Every detail has been carefully crafted to deliver a premium user experience with attention to design, performance, and usability.</p>
+                    <p>Every detail has been carefully crafted to deliver a premium user experience with attention to design and usability.</p>
                 </div>
             </div>
         </main>
@@ -360,7 +285,7 @@
     </div>
 
     <script>
-        // Enhanced smooth scrolling
+        // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -373,59 +298,6 @@
                 }
             });
         });
-
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                    entry.target.classList.add('fade-in-up');
-                }
-            });
-        }, observerOptions);
-
-        // Initialize animations
-        document.addEventListener('DOMContentLoaded', () => {
-            // Observe all cards for scroll animations
-            document.querySelectorAll('.card').forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(30px)';
-                card.style.transition = `opacity 0.8s ease ${index * 0.1}s, transform 0.8s ease ${index * 0.1}s`;
-                observer.observe(card);
-            });
-
-            // Animate stats on scroll
-            document.querySelectorAll('.stat').forEach((stat, index) => {
-                stat.style.opacity = '0';
-                stat.style.transform = 'translateY(20px)';
-                stat.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
-                observer.observe(stat);
-            });
-        });
-
-        // Add parallax effect to background
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.5;
-            document.body.style.backgroundPosition = `center ${rate}px`;
-        });
-
-        // Add loading animation
-        window.addEventListener('load', () => {
-            document.body.style.opacity = '1';
-            document.body.style.transform = 'translateY(0)';
-        });
-
-        // Initialize page
-        document.body.style.opacity = '0';
-        document.body.style.transform = 'translateY(20px)';
-        document.body.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
     </script>
 </body>
 </html>
