@@ -19,12 +19,20 @@
 
         /* Header */
         header {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            z-index: 100;
+            z-index: 1000;
             padding: 0 50px;
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(39, 174, 96, 0.95);
+            backdrop-filter: blur(10px);
         }
 
         nav {
@@ -87,7 +95,7 @@
             text-decoration: none;
             font-weight: 500;
             transition: opacity 0.3s ease;
-            cursor: default;
+            cursor: pointer;
         }
 
         .nav-links a:hover {
@@ -116,6 +124,7 @@
             display: flex;
             align-items: center;
             position: relative;
+            padding-top: 80px;
         }
 
         .hero-content {
@@ -177,7 +186,7 @@
 
         /* Features Section */
         .features {
-            padding: 60px 0;
+            padding: 80px 0 60px 0;
             background: #e8e6e1;
         }
 
@@ -251,7 +260,7 @@
 
         /* About Section */
         .about {
-            padding: 80px 0;
+            padding: 100px 0 80px 0;
             background: #e8e6e1;
         }
 
@@ -304,7 +313,7 @@
 
         /* Contact Section */
         .contact {
-            padding: 80px 0;
+            padding: 100px 0 80px 0;
             background: #f8f8f6;
         }
 
@@ -407,7 +416,7 @@
 
         /* CTA Section */
         .cta-section {
-            padding: 80px 0;
+            padding: 100px 0 80px 0;
             background: #27ae60;
             text-align: center;
         }
@@ -741,10 +750,21 @@
                 if (target) {
                     target.scrollIntoView({
                         behavior: 'smooth',
-                        block: 'start'
+                        block: 'start',
+                        inline: 'nearest'
                     });
                 }
             });
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
         });
     </script>
 </body>
