@@ -405,6 +405,65 @@
             background: #219a52;
         }
 
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 0;
+            background: #27ae60;
+            text-align: center;
+        }
+
+        .cta-content h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .cta-content p {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            background: white;
+            color: #27ae60;
+            padding: 15px 30px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 4px;
+        }
+
+        .cta-btn:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+        }
+
+        .cta-btn.secondary {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .cta-btn.secondary:hover {
+            background: white;
+            color: #27ae60;
+        }
+
         .about-image {
             position: relative;
         }
@@ -500,6 +559,25 @@
             .contact-subtitle {
                 font-size: 1.1rem;
             }
+
+            .cta-content h2 {
+                font-size: 2rem;
+            }
+
+            .cta-content p {
+                font-size: 1.1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-btn {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -525,10 +603,6 @@
         <div class="hero-content">
             <h1>Empower your business</h1>
             <p>Innovative IT solutions for growth</p>
-            <div class="cta-buttons">
-                <a href="appointment.html" class="cta-btn">Schedule an Appointment</a>
-                <a href="intake.html" class="cta-btn secondary">Complete Intake</a>
-            </div>
         </div>
     </section>
 
@@ -642,6 +716,20 @@
                 
                 <button type="submit" class="submit-btn">Submit</button>
             </form>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to get started?</h2>
+                <p>Take the next step towards transforming your IT infrastructure</p>
+                <div class="cta-buttons">
+                    <a href="appointment.html" class="cta-btn">Schedule an Appointment</a>
+                    <a href="intake.html" class="cta-btn secondary">Complete Intake</a>
+                </div>
+            </div>
         </div>
     </section>
     <script>
