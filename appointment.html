@@ -898,9 +898,8 @@
                 submitBtn.disabled = true;
                 
                 // Replace this URL with your Google Apps Script web app URL
-                const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCcGCGquKF56bjmS_t2eBONod8gALafdxyj-qnKvw/dev';
+                const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
                 
-                if (GOOGLE_SCRIPT_URL.includes('YOUR_SCRIPT_ID')) {
                     // Google Sheets not configured yet - show success message anyway
                     // Show success message without network request
                     alert(`${formType === 'appointment' ? 'Appointment' : 'Intake form'} submitted successfully!\n\nWe will contact you shortly to confirm your ${formType === 'appointment' ? 'appointment' : 'information'}.\n\nNote: To enable automatic data saving, please configure Google Sheets integration.`);
