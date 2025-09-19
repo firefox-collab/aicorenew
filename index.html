@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website - Modern & Professional</title>
+    <title>AI CORE IT SOLUTIONS</title>
     <style>
         * {
             margin: 0;
@@ -14,277 +14,331 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
+            color: #333;
+        }
+
+        /* Top Banner */
+        .top-banner {
+            background: #2c3e50;
+            color: white;
+            padding: 8px 0;
+            font-size: 14px;
+            text-align: center;
+            position: relative;
+        }
+
+        .top-banner .close-btn {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .start-btn {
+            background: #27ae60;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        /* Header */
+        header {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 0 50px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .contact-btn {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            background: white;
             color: #2c3e50;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop') center/cover;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 50px;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .view-services-btn {
+            background: #27ae60;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .view-services-btn:hover {
+            background: #219a52;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: #f8f9fa;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 0 50px;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 4rem;
-            color: white;
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-        }
-
-        .subtitle {
-            font-size: 1.3rem;
-            opacity: 0.95;
-            margin-bottom: 2rem;
-            font-weight: 300;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-            margin-bottom: 2rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 35px 70px rgba(0,0,0,0.2);
-        }
-
-        .hero-card {
-            text-align: center;
-        }
-
-        .hero-card h2 {
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
-            color: #2c3e50;
-            font-weight: 600;
-        }
-
-        .hero-card p {
-            font-size: 1.1rem;
-            color: #5a6c7d;
-            margin-bottom: 2rem;
-            line-height: 1.7;
-        }
-
-        .features {
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
         }
 
-        .feature {
+        .feature-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             text-align: center;
-            padding: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
         }
 
         .feature-icon {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: #27ae60;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1.5rem;
+            margin: 0 auto 20px;
             font-size: 2rem;
             color: white;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
         }
 
-        .feature h3 {
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
             color: #2c3e50;
-            margin-bottom: 1rem;
-            font-size: 1.4rem;
-            font-weight: 600;
         }
 
-        .feature p {
-            color: #5a6c7d;
+        .feature-card p {
+            color: #666;
             line-height: 1.6;
         }
 
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .stat {
+        .section-title {
             text-align: center;
-            color: white;
-        }
-
-        .stat-number {
             font-size: 2.5rem;
-            font-weight: 700;
-            display: block;
-            margin-bottom: 0.5rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
         }
 
-        .stat-label {
-            font-size: 1rem;
-            opacity: 0.9;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        footer {
+        .section-subtitle {
             text-align: center;
-            color: white;
-            margin-top: 4rem;
-            opacity: 0.9;
-            padding: 2rem 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
+            header {
+                padding: 0 20px;
             }
-            
-            h1 {
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content {
+                padding: 0 20px;
+            }
+
+            .hero h1 {
                 font-size: 2.5rem;
             }
-            
-            .features {
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+
+            .features-grid {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .card {
-                padding: 1.5rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 2rem;
-            }
-
-            .hero-card h2 {
-                font-size: 1.8rem;
-            }
-
-            .stats {
-                grid-template-columns: 1fr;
+                gap: 30px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Welcome to My Website</h1>
-            <p class="subtitle">Experience the future of web design</p>
-        </header>
-
-        <main>
-            <div class="card hero-card">
-                <h2>Clean & Modern Design</h2>
-                <p>This website showcases modern web development with responsive design, smooth animations, and premium user experience. Built with the latest HTML5 and CSS3 technologies.</p>
-                <a href="#features" class="cta-button">Explore Features</a>
-            </div>
-
-            <div class="stats">
-                <div class="stat">
-                    <span class="stat-number">100%</span>
-                    <span class="stat-label">Responsive</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number">Fast</span>
-                    <span class="stat-label">Loading</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number">Modern</span>
-                    <span class="stat-label">Design</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number">2025</span>
-                    <span class="stat-label">Standards</span>
-                </div>
-            </div>
-
-            <div class="features" id="features">
-                <div class="card feature">
-                    <div class="feature-icon">📱</div>
-                    <h3>Responsive Design</h3>
-                    <p>Perfectly optimized for all devices - desktop, tablet, and mobile. The layout adapts fluidly to any screen size.</p>
-                </div>
-
-                <div class="card feature">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Lightning Fast</h3>
-                    <p>Optimized code and efficient loading strategies ensure blazing-fast performance and smooth user interactions.</p>
-                </div>
-
-                <div class="card feature">
-                    <div class="feature-icon">🎨</div>
-                    <h3>Beautiful UI</h3>
-                    <p>Modern gradient backgrounds, glassmorphism effects, and carefully crafted interactions create an engaging experience.</p>
-                </div>
-
-                <div class="card feature">
-                    <div class="feature-icon">🔒</div>
-                    <h3>Secure & Reliable</h3>
-                    <p>Built with security best practices and clean code structure for reliable performance across all modern browsers.</p>
-                </div>
-
-                <div class="card feature">
-                    <div class="feature-icon">🚀</div>
-                    <h3>Future Ready</h3>
-                    <p>Developed using the latest web standards and technologies, ensuring compatibility and performance for years to come.</p>
-                </div>
-
-                <div class="card feature">
-                    <div class="feature-icon">💎</div>
-                    <h3>Premium Quality</h3>
-                    <p>Every detail has been carefully crafted to deliver a premium user experience with attention to design and usability.</p>
-                </div>
-            </div>
-        </main>
-
-        <footer>
-            <p>&copy; 2025 My Website. Crafted with modern web technologies.</p>
-        </footer>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        Website designed with the B12 website builder. Create your own website today.
+        <button class="start-btn">START FOR FREE</button>
+        <button class="close-btn">×</button>
     </div>
 
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">AI CORE IT SOLUTIONS</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+            </ul>
+            <a href="#contact" class="contact-btn">CONTACT</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Empower your business</h1>
+            <p>Innovative IT solutions for growth</p>
+            <a href="#services" class="view-services-btn">VIEW SERVICES</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-subtitle">We provide comprehensive IT solutions to help your business thrive in the digital age</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💻</div>
+                    <h3>Web Development</h3>
+                    <p>Custom websites and web applications built with modern technologies and best practices for optimal performance.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">☁️</div>
+                    <h3>Cloud Solutions</h3>
+                    <p>Scalable cloud infrastructure and migration services to enhance your business operations and reduce costs.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Cybersecurity</h3>
+                    <p>Comprehensive security solutions to protect your business data and systems from cyber threats.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Mobile Apps</h3>
+                    <p>Native and cross-platform mobile applications designed to engage your customers and grow your business.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Solutions</h3>
+                    <p>Artificial intelligence and machine learning solutions to automate processes and gain valuable insights.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>IT Support</h3>
+                    <p>24/7 technical support and maintenance services to keep your systems running smoothly and efficiently.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <script>
+        // Close banner functionality
+        document.querySelector('.close-btn').addEventListener('click', function() {
+            document.querySelector('.top-banner').style.display = 'none';
+        });
+
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
