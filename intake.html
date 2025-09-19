@@ -66,13 +66,14 @@
         .logo-image {
             width: 50px;
             height: 50px;
-            animation: logoFloat 3s ease-in-out infinite, logoRotate 10s linear infinite;
+            border-radius: 8px;
+            animation: logoFloat 4s ease-in-out infinite, logoPulse 3s ease-in-out infinite;
             transition: transform 0.3s ease;
             filter: drop-shadow(0 0 10px rgba(39, 174, 96, 0.5));
         }
 
         .logo-image:hover {
-            transform: scale(1.2) rotate(15deg);
+            transform: scale(1.1);
             filter: drop-shadow(0 0 20px rgba(39, 174, 96, 0.8));
         }
 
@@ -94,16 +95,19 @@
                 transform: translateY(0px);
             }
             50% {
-                transform: translateY(-10px);
+                transform: translateY(-5px);
             }
         }
 
-        @keyframes logoRotate {
+        @keyframes logoPulse {
             0% {
-                transform: rotate(0deg);
+                filter: drop-shadow(0 0 10px rgba(39, 174, 96, 0.5));
+            }
+            50% {
+                filter: drop-shadow(0 0 15px rgba(39, 174, 96, 0.8));
             }
             100% {
-                transform: rotate(360deg);
+                filter: drop-shadow(0 0 10px rgba(39, 174, 96, 0.5));
             }
         }
 
