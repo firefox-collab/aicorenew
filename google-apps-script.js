@@ -270,4 +270,3 @@ function testSetup() {
     console.log('ERROR:', error.toString());
   }
 }
-}
