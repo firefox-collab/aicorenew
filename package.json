@@ -4,11 +4,9 @@
   "description": "A modern static website",
   "main": "index.html",
   "scripts": {
-    "start": "serve . -p 3000",
-    "dev": "serve . -p 3000"
+    "dev": "python3 -m http.server 8000",
+    "start": "python3 -m http.server 8000"
   },
   "keywords": ["website", "static", "html"],
   "author": "",
-  "license": "MIT",
-  "devDependencies": {}
-}
+  "license": "MIT"
