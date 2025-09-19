@@ -87,6 +87,7 @@
             text-decoration: none;
             font-weight: 500;
             transition: opacity 0.3s ease;
+            cursor: default;
         }
 
         .nav-links a:hover {
@@ -158,8 +159,8 @@
 
         /* Features Section */
         .features {
-            padding: 80px 0;
-            background: #f8f9fa;
+            padding: 60px 0;
+            background: #e8e6e1;
         }
 
         .container {
@@ -168,63 +169,66 @@
             padding: 0 50px;
         }
 
-        .features-grid {
+        .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
             margin-top: 50px;
         }
 
-        .feature-card {
+        .service-card {
             background: white;
-            padding: 40px 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
             transition: transform 0.3s ease;
+            cursor: pointer;
         }
 
-        .feature-card:hover {
+        .service-card:hover {
             transform: translateY(-5px);
         }
 
-        .feature-icon {
-            width: 80px;
-            height: 80px;
-            background: #27ae60;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 2rem;
-            color: white;
+        .service-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
         }
 
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: #2c3e50;
+        .service-content {
+            padding: 25px;
         }
 
-        .feature-card p {
+        .service-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            color: #4a4a4a;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .service-card h3::after {
+            content: " >";
+            color: #27ae60;
+        }
+
+        .service-card p {
             color: #666;
             line-height: 1.6;
+            font-size: 0.95rem;
         }
 
         .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            color: #2c3e50;
+            font-size: 2.2rem;
+            color: #27ae60;
             margin-bottom: 20px;
+            font-weight: 600;
         }
 
         .section-subtitle {
-            text-align: center;
             font-size: 1.2rem;
             color: #666;
-            max-width: 600px;
-            margin: 0 auto;
+            margin-bottom: 40px;
         }
 
         /* Responsive Design */
@@ -253,9 +257,13 @@
                 padding: 0 20px;
             }
 
-            .features-grid {
+            .services-grid {
                 grid-template-columns: 1fr;
                 gap: 30px;
+            }
+
+            .service-image {
+                height: 180px;
             }
         }
     </style>
@@ -289,44 +297,32 @@
     <!-- Features Section -->
     <section class="features" id="services">
         <div class="container">
-            <h2 class="section-title">Our Services</h2>
-            <p class="section-subtitle">We provide comprehensive IT solutions to help your business thrive in the digital age</p>
+            <h2 class="section-title">Tailored IT solutions</h2>
+            <p class="section-subtitle">Empowering your business with technology</p>
             
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">💻</div>
-                    <h3>Web Development</h3>
-                    <p>Custom websites and web applications built with modern technologies and best practices for optimal performance.</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <img src="https://images.pexels.com/photos/325229/pexels-photo-325229.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop" alt="IT Equipment" class="service-image">
+                    <div class="service-content">
+                        <h3>IT Equipment Supply and IT Services</h3>
+                        <p>Reliable sourcing of top-grade IT equipment.</p>
+                    </div>
                 </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon">☁️</div>
-                    <h3>Cloud Solutions</h3>
-                    <p>Scalable cloud infrastructure and migration services to enhance your business operations and reduce costs.</p>
+                <div class="service-card">
+                    <img src="https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop" alt="CCTV and Biometrics" class="service-image">
+                    <div class="service-content">
+                        <h3>CCTV, Biometrics & Access Control solutions</h3>
+                        <p>Enhancing security with advanced surveillance and access control.</p>
+                    </div>
                 </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3>Cybersecurity</h3>
-                    <p>Comprehensive security solutions to protect your business data and systems from cyber threats.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3>Mobile Apps</h3>
-                    <p>Native and cross-platform mobile applications designed to engage your customers and grow your business.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🤖</div>
-                    <h3>AI Solutions</h3>
-                    <p>Artificial intelligence and machine learning solutions to automate processes and gain valuable insights.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">⚙️</div>
-                    <h3>IT Support</h3>
-                    <p>24/7 technical support and maintenance services to keep your systems running smoothly and efficiently.</p>
+                <div class="service-card">
+                    <img src="https://images.pexels.com/photos/159304/network-cable-ethernet-computer-159304.jpeg?auto=compress&cs=tinysrgb&w=400&h=200&fit=crop" alt="Structured Cabling" class="service-image">
+                    <div class="service-content">
+                        <h3>Structured cabling, Fiber Optics Backbone and Wireless Solutions</h3>
+                        <p>Efficient cabling systems for seamless connectivity.</p>
+                    </div>
                 </div>
             </div>
         </div>
