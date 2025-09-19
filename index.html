@@ -139,7 +139,13 @@
             font-weight: 300;
         }
 
-        .view-services-btn {
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
             background: #27ae60;
             color: white;
             padding: 15px 30px;
@@ -151,10 +157,22 @@
             transition: background 0.3s ease;
             text-decoration: none;
             display: inline-block;
+            border-radius: 4px;
         }
 
-        .view-services-btn:hover {
+        .cta-btn:hover {
             background: #219a52;
+        }
+
+        .cta-btn.secondary {
+            background: transparent;
+            border: 2px solid #27ae60;
+            color: #27ae60;
+        }
+
+        .cta-btn.secondary:hover {
+            background: #27ae60;
+            color: white;
         }
 
         /* Features Section */
@@ -421,6 +439,17 @@
                 font-size: 1.1rem;
             }
 
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-btn {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+
             .container {
                 padding: 0 20px;
             }
@@ -496,7 +525,10 @@
         <div class="hero-content">
             <h1>Empower your business</h1>
             <p>Innovative IT solutions for growth</p>
-            <a href="#services" class="view-services-btn">VIEW SERVICES</a>
+            <div class="cta-buttons">
+                <a href="appointment.html" class="cta-btn">Schedule an Appointment</a>
+                <a href="intake.html" class="cta-btn secondary">Complete Intake</a>
+            </div>
         </div>
     </section>
 

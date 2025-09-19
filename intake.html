@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intake Form - AI CORE IT SOLUTIONS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f8f6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #27ae60;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .form-container {
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #27ae60;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            font-weight: normal;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #27ae60;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #219a52;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 0;
+                border-radius: 0;
+            }
+
+            .form-container {
+                padding: 30px 20px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .back-btn {
+                top: 20px;
+                left: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="index.html" class="back-btn">←</a>
+            <h1>Intake form</h1>
+            <p>Help us serve you better</p>
+        </div>
+
+        <div class="form-container">
+            <form>
+                <div class="form-group">
+                    <label for="name">Name <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email address <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" placeholder="email@website.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label>What type of IT services are you interested in?</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="equipment-supply" name="services" value="equipment-supply">
+                            <label for="equipment-supply">IT equipment supply</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cctv-biometrics" name="services" value="cctv-biometrics">
+                            <label for="cctv-biometrics">CCTV & biometrics</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="structured-cabling" name="services" value="structured-cabling">
+                            <label for="structured-cabling">Structured cabling</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="ups-systems" name="services" value="ups-systems">
+                            <label for="ups-systems">UPS systems</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="system-maintenance" name="services" value="system-maintenance">
+                            <label for="system-maintenance">System maintenance</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="datacenter-design" name="services" value="datacenter-design">
+                            <label for="datacenter-design">Data center design</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="fitout-works" name="services" value="fitout-works">
+                            <label for="fitout-works">Fitout works (masonry, carpentry, plumbing, etc.)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cooling-power" name="services" value="cooling-power">
+                            <label for="cooling-power">Cooling and power solution systems (PACU, commercial air-conditioning, refrigeration)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="fire-safety" name="services" value="fire-safety">
+                            <label for="fire-safety">Fire safety solutions</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="company-size">What is your company's size?</label>
+                    <select id="company-size" name="company-size">
+                        <option value="">Select</option>
+                        <option value="1-10">1-10 employees</option>
+                        <option value="11-50">11-50 employees</option>
+                        <option value="51-200">51-200 employees</option>
+                        <option value="201-500">201-500 employees</option>
+                        <option value="500+">500+ employees</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="communication-method">What is your preferred method of communication?</label>
+                    <select id="communication-method" name="communication-method">
+                        <option value="">Select</option>
+                        <option value="email">Email</option>
+                        <option value="phone">Phone</option>
+                        <option value="video-call">Video Call</option>
+                        <option value="in-person">In-person meeting</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="project-timeline">What is your project's timeline?</label>
+                    <select id="project-timeline" name="project-timeline">
+                        <option value="">Select</option>
+                        <option value="immediate">Immediate (within 1 month)</option>
+                        <option value="short-term">Short-term (1-3 months)</option>
+                        <option value="medium-term">Medium-term (3-6 months)</option>
+                        <option value="long-term">Long-term (6+ months)</option>
+                        <option value="planning">Still in planning phase</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="budget-range">What is your budget range for this project?</label>
+                    <select id="budget-range" name="budget-range">
+                        <option value="">Select</option>
+                        <option value="under-50k">Under ₱50,000</option>
+                        <option value="50k-100k">₱50,000 - ₱100,000</option>
+                        <option value="100k-500k">₱100,000 - ₱500,000</option>
+                        <option value="500k-1m">₱500,000 - ₱1,000,000</option>
+                        <option value="over-1m">Over ₱1,000,000</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="current-infrastructure">Please describe your current IT infrastructure or setup.</label>
+                    <textarea id="current-infrastructure" name="current-infrastructure" rows="4" placeholder="Describe your current setup, equipment, and any existing systems..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="challenges">What challenges are you currently facing with your IT systems?</label>
+                    <textarea id="challenges" name="challenges" rows="4" placeholder="Describe any issues, limitations, or problems you're experiencing..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Which service or services are you interested in?</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="it-equipment-services" name="interested-services" value="it-equipment-services">
+                            <label for="it-equipment-services">IT Equipment Supply and IT Services</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cctv-access-control" name="interested-services" value="cctv-access-control">
+                            <label for="cctv-access-control">CCTV, Biometrics & Access Control solutions</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="fiber-wireless" name="interested-services" value="fiber-wireless">
+                            <label for="fiber-wireless">Structured cabling, Fiber Optics Backbone and Wireless Solutions</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="additional-comments">Additional questions or comments</label>
+                    <textarea id="additional-comments" name="additional-comments" rows="4" placeholder="Enter any additional questions or comments..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Intake form submitted successfully! We will review your information and contact you soon.');
+        });
+    </script>
+</body>
+</html>
