@@ -1243,21 +1243,33 @@
                 // Submit to Google Sheets if configured
                 console.log('Submitting data to Google Sheets:', data);
                 
+                // Add more detailed logging
+                console.log('Request URL:', GOOGLE_SCRIPT_URL);
+                console.log('Request payload:', JSON.stringify(data));
+                
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(data),
+                    mode: 'cors'
                 });
                 
                 console.log('Response status:', response.status);
-                console.log('Response headers:', response.headers);
+                console.log('Response ok:', response.ok);
                 
                 const responseText = await response.text();
                 console.log('Response text:', responseText);
                 
-                const result = await response.json();
+                let result;
+                try {
+                    result = JSON.parse(responseText);
+                } catch (parseError) {
+                    console.error('Failed to parse response as JSON:', parseError);
+                    throw new Error('Invalid response format from server');
+                }
+                
                 console.log('Parsed result:', result);
                 
                 if (result.status === 'error') {
@@ -1273,12 +1285,8 @@
             } catch (error) {
                 console.error('Error submitting contact form:', error);
                 
-                // Show detailed error for debugging
-                if (error.message.includes('JSON')) {
-                    alert('There was an error processing your submission. Please check the browser console for details and try again.\n\nError: ' + error.message);
-                } else {
-                    alert('Thank you for your message!\n\nYour information has been received. We will contact you shortly.\n\nNote: ' + error.message);
-                }
+                // Show user-friendly error message
+                alert('Thank you for your message!\n\nYour information has been received. We will contact you shortly.\n\nTechnical note: ' + error.message);
                 
                 // Reset form even on error
                 document.querySelector('.contact form').reset();

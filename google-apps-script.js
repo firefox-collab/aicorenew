@@ -3,77 +3,158 @@
 
 function doPost(e) {
   try {
-    // Log the incoming request for debugging
-    console.log('Received POST request');
-    console.log('Full request object:', e);
+    // Log the entire event object for debugging
+    console.log('=== INCOMING REQUEST DEBUG ===');
+    console.log('Event object keys:', Object.keys(e || {}));
+    console.log('Full event object:', JSON.stringify(e, null, 2));
     
-    // Check if postData exists
-    if (!e.postData || !e.postData.contents) {
-      console.error('No postData found in request');
-      return ContentService
-        .createTextOutput(JSON.stringify({status: 'error', message: 'No data received in request'}))
-        .setMimeType(ContentService.MimeType.JSON);
+    // Check if we have any data at all
+    if (!e) {
+      console.error('No event object received');
+      return createErrorResponse('No request data received');
     }
     
-    console.log('Request body:', e.postData.contents);
+    // Try multiple ways to get the data
+    let data = null;
+    let dataSource = 'unknown';
     
-    // Parse the incoming data
-    const data = JSON.parse(e.postData.contents);
-    console.log('Parsed data:', data);
+    // Method 1: Check postData.contents
+    if (e.postData && e.postData.contents) {
+      console.log('Found data in postData.contents');
+      try {
+        data = JSON.parse(e.postData.contents);
+        dataSource = 'postData.contents';
+      } catch (parseError) {
+        console.error('Failed to parse postData.contents:', parseError);
+      }
+    }
+    
+    // Method 2: Check postData.getDataAsString()
+    if (!data && e.postData && typeof e.postData.getDataAsString === 'function') {
+      console.log('Trying postData.getDataAsString()');
+      try {
+        const dataString = e.postData.getDataAsString();
+        data = JSON.parse(dataString);
+        dataSource = 'postData.getDataAsString()';
+      } catch (parseError) {
+        console.error('Failed to parse getDataAsString():', parseError);
+      }
+    }
+    
+    // Method 3: Check parameters
+    if (!data && e.parameter) {
+      console.log('Found data in parameters');
+      data = e.parameter;
+      dataSource = 'parameters';
+    }
+    
+    // Method 4: Check if data is directly in the event
+    if (!data && e.name) {
+      console.log('Found data directly in event object');
+      data = e;
+      dataSource = 'direct';
+    }
+    
+    if (!data) {
+      console.error('No data found in any expected location');
+      console.log('Available properties:', Object.keys(e));
+      return createErrorResponse('No form data found in request. Available properties: ' + Object.keys(e).join(', '));
+    }
+    
+    console.log('Data found via:', dataSource);
+    console.log('Parsed data:', JSON.stringify(data, null, 2));
+    
+    // Validate required fields
+    if (!data.name || !data.email) {
+      console.error('Missing required fields:', { name: data.name, email: data.email });
+      return createErrorResponse('Missing required fields: name and email are required');
+    }
     
     // Get or create the spreadsheet
     const spreadsheetId = 'YOUR_SPREADSHEET_ID'; // Replace with your Google Sheets ID
     
     if (spreadsheetId === 'YOUR_SPREADSHEET_ID') {
-      throw new Error('Please replace YOUR_SPREADSHEET_ID with your actual Google Sheets ID');
+      console.error('Spreadsheet ID not configured');
+      return createErrorResponse('Please replace YOUR_SPREADSHEET_ID with your actual Google Sheets ID in the script');
     }
     
-    const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
-    console.log('Opened spreadsheet:', spreadsheet.getName());
+    let spreadsheet;
+    try {
+      spreadsheet = SpreadsheetApp.openById(spreadsheetId);
+      console.log('Successfully opened spreadsheet:', spreadsheet.getName());
+    } catch (spreadsheetError) {
+      console.error('Failed to open spreadsheet:', spreadsheetError);
+      return createErrorResponse('Failed to open spreadsheet. Please check the spreadsheet ID: ' + spreadsheetError.toString());
+    }
     
-    // Determine which sheet to use based on form type
+    // Determine form type and process accordingly
+    const formType = data.type || 'Contact';
+    console.log('Processing form type:', formType);
+    
     let sheet;
-    if (data.type === 'Appointment') {
-      sheet = getOrCreateSheet(spreadsheet, 'Appointments');
-      setupAppointmentHeaders(sheet);
-      appendAppointmentData(sheet, data);
-    } else if (data.type === 'Intake') {
-      sheet = getOrCreateSheet(spreadsheet, 'Intake Forms');
-      setupIntakeHeaders(sheet);
-      appendIntakeData(sheet, data);
-    } else if (data.type === 'Contact') {
-      sheet = getOrCreateSheet(spreadsheet, 'Contact Forms');
-      setupContactHeaders(sheet);
-      appendContactData(sheet, data);
-    } else {
-      throw new Error('Unknown form type: ' + data.type);
+    try {
+      if (formType === 'Appointment') {
+        sheet = getOrCreateSheet(spreadsheet, 'Appointments');
+        setupAppointmentHeaders(sheet);
+        appendAppointmentData(sheet, data);
+      } else if (formType === 'Intake') {
+        sheet = getOrCreateSheet(spreadsheet, 'Intake Forms');
+        setupIntakeHeaders(sheet);
+        appendIntakeData(sheet, data);
+      } else {
+        sheet = getOrCreateSheet(spreadsheet, 'Contact Forms');
+        setupContactHeaders(sheet);
+        appendContactData(sheet, data);
+      }
+      
+      console.log('Successfully processed data for sheet:', sheet.getName());
+      
+    } catch (sheetError) {
+      console.error('Error processing sheet operations:', sheetError);
+      return createErrorResponse('Error saving to spreadsheet: ' + sheetError.toString());
     }
     
-    console.log('Data successfully added to sheet:', sheet.getName());
+    return createSuccessResponse('Data saved successfully to ' + sheet.getName());
     
-    return ContentService
-      .createTextOutput(JSON.stringify({status: 'success', message: 'Data saved successfully'}))
-      .setMimeType(ContentService.MimeType.JSON);
-      
   } catch (error) {
-    console.error('Error processing form submission:', error);
-    return ContentService
-      .createTextOutput(JSON.stringify({status: 'error', message: error.toString()}))
-      .setMimeType(ContentService.MimeType.JSON);
+    console.error('Unexpected error in doPost:', error);
+    console.error('Error stack:', error.stack);
+    return createErrorResponse('Unexpected error: ' + error.toString());
   }
 }
 
 function doGet(e) {
-  // Handle GET requests for testing
-  console.log('Received GET request');
-  console.log('Parameters:', e.parameter);
+  console.log('=== GET REQUEST DEBUG ===');
+  console.log('GET parameters:', e ? e.parameter : 'No event object');
+  
   return ContentService
     .createTextOutput(JSON.stringify({
-      status: 'success', 
+      status: 'success',
       message: 'Google Apps Script is working! Use POST requests to submit form data.',
+      timestamp: new Date().toISOString(),
+      receivedParams: e ? Object.keys(e.parameter || {}) : []
+    }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function createSuccessResponse(message) {
+  return ContentService
+    .createTextOutput(JSON.stringify({
+      status: 'success',
+      message: message,
       timestamp: new Date().toISOString()
     }))
-    .setMimeType(ContentService.MimeType.TEXT);
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function createErrorResponse(message) {
+  return ContentService
+    .createTextOutput(JSON.stringify({
+      status: 'error',
+      message: message,
+      timestamp: new Date().toISOString()
+    }))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 function getOrCreateSheet(spreadsheet, sheetName) {
@@ -86,83 +167,50 @@ function getOrCreateSheet(spreadsheet, sheetName) {
 }
 
 function setupContactHeaders(sheet) {
-  // Check if headers already exist
   if (sheet.getLastRow() === 0) {
     console.log('Setting up contact headers');
-    const headers = [
-      'Timestamp',
-      'Name',
-      'Email',
-      'Phone',
-      'Message'
-    ];
+    const headers = ['Timestamp', 'Name', 'Email', 'Phone', 'Message'];
     sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
     
-    // Format headers
     const headerRange = sheet.getRange(1, 1, 1, headers.length);
     headerRange.setFontWeight('bold');
     headerRange.setBackground('#00ffff');
-    headerRange.setFontColor('black');
+    headerRange.setFontColor('#000000');
     
-    // Auto-resize columns
     sheet.autoResizeColumns(1, headers.length);
   }
 }
 
 function setupAppointmentHeaders(sheet) {
-  // Check if headers already exist
   if (sheet.getLastRow() === 0) {
     console.log('Setting up appointment headers');
-    const headers = [
-      'Timestamp',
-      'Name',
-      'Email',
-      'Phone',
-      'Appointment Date',
-      'Appointment Time',
-      'Services',
-      'Message'
-    ];
+    const headers = ['Timestamp', 'Name', 'Email', 'Phone', 'Date', 'Time', 'Services', 'Message'];
     sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
     
-    // Format headers
     const headerRange = sheet.getRange(1, 1, 1, headers.length);
     headerRange.setFontWeight('bold');
     headerRange.setBackground('#00ffff');
-    headerRange.setFontColor('black');
+    headerRange.setFontColor('#000000');
     
-    // Auto-resize columns
     sheet.autoResizeColumns(1, headers.length);
   }
 }
 
 function setupIntakeHeaders(sheet) {
-  // Check if headers already exist
   if (sheet.getLastRow() === 0) {
     console.log('Setting up intake headers');
     const headers = [
-      'Timestamp',
-      'Name',
-      'Email',
-      'Services Interested',
-      'Company Size',
-      'Communication Method',
-      'Project Timeline',
-      'Budget Range',
-      'Current Infrastructure',
-      'Challenges',
-      'Interested Services',
-      'Additional Comments'
+      'Timestamp', 'Name', 'Email', 'Services', 'Company Size', 
+      'Communication Method', 'Timeline', 'Budget', 'Infrastructure', 
+      'Challenges', 'Interested Services', 'Comments'
     ];
     sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
     
-    // Format headers
     const headerRange = sheet.getRange(1, 1, 1, headers.length);
     headerRange.setFontWeight('bold');
     headerRange.setBackground('#00ffff');
-    headerRange.setFontColor('black');
+    headerRange.setFontColor('#000000');
     
-    // Auto-resize columns
     sheet.autoResizeColumns(1, headers.length);
   }
 }
@@ -170,7 +218,7 @@ function setupIntakeHeaders(sheet) {
 function appendContactData(sheet, data) {
   console.log('Appending contact data');
   const row = [
-    new Date(data.timestamp),
+    new Date(),
     data.name || '',
     data.email || '',
     data.phone || '',
@@ -178,15 +226,13 @@ function appendContactData(sheet, data) {
   ];
   
   sheet.appendRow(row);
-  
-  // Auto-resize columns
   sheet.autoResizeColumns(1, row.length);
 }
 
 function appendAppointmentData(sheet, data) {
   console.log('Appending appointment data');
   const row = [
-    new Date(data.timestamp),
+    new Date(),
     data.name || '',
     data.email || '',
     data.phone || '',
@@ -197,15 +243,13 @@ function appendAppointmentData(sheet, data) {
   ];
   
   sheet.appendRow(row);
-  
-  // Auto-resize columns
   sheet.autoResizeColumns(1, row.length);
 }
 
 function appendIntakeData(sheet, data) {
   console.log('Appending intake data');
   const row = [
-    new Date(data.timestamp),
+    new Date(),
     data.name || '',
     data.email || '',
     data.services || '',
@@ -220,53 +264,79 @@ function appendIntakeData(sheet, data) {
   ];
   
   sheet.appendRow(row);
-  
-  // Auto-resize columns
   sheet.autoResizeColumns(1, row.length);
 }
 
-// Test function to verify setup
+// Enhanced test function
 function testSetup() {
+  console.log('=== TESTING SETUP ===');
+  
   const spreadsheetId = 'YOUR_SPREADSHEET_ID';
   
   if (spreadsheetId === 'YOUR_SPREADSHEET_ID') {
-    console.log('ERROR: Please replace YOUR_SPREADSHEET_ID with your actual Google Sheets ID');
-    return;
+    console.log('❌ ERROR: Please replace YOUR_SPREADSHEET_ID with your actual Google Sheets ID');
+    return false;
   }
   
   try {
+    // Test spreadsheet access
     const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
-    console.log('SUCCESS: Connected to spreadsheet:', spreadsheet.getName());
+    console.log('✅ SUCCESS: Connected to spreadsheet:', spreadsheet.getName());
     
-    // Test creating sheets
+    // Test sheet creation and headers
     const contactSheet = getOrCreateSheet(spreadsheet, 'Contact Forms');
     setupContactHeaders(contactSheet);
-    console.log('SUCCESS: Contact sheet ready');
+    console.log('✅ SUCCESS: Contact sheet ready');
     
     const appointmentSheet = getOrCreateSheet(spreadsheet, 'Appointments');
     setupAppointmentHeaders(appointmentSheet);
-    console.log('SUCCESS: Appointment sheet ready');
+    console.log('✅ SUCCESS: Appointment sheet ready');
     
     const intakeSheet = getOrCreateSheet(spreadsheet, 'Intake Forms');
     setupIntakeHeaders(intakeSheet);
-    console.log('SUCCESS: Intake sheet ready');
-    
-    console.log('All sheets are ready!');
+    console.log('✅ SUCCESS: Intake sheet ready');
     
     // Test data submission
-    const testContactData = {
-      timestamp: new Date().toISOString(),
+    const testData = {
       name: 'Test User',
       email: 'test@example.com',
       phone: '555-0123',
-      message: 'Test message',
+      message: 'Test message from setup function',
       type: 'Contact'
     };
     
-    appendContactData(contactSheet, testContactData);
-    console.log('SUCCESS: Test contact data added');
+    appendContactData(contactSheet, testData);
+    console.log('✅ SUCCESS: Test data added to Contact Forms sheet');
+    
+    console.log('🎉 All tests passed! Your setup is working correctly.');
+    return true;
     
   } catch (error) {
-    console.log('ERROR:', error.toString());
+    console.log('❌ ERROR:', error.toString());
+    console.log('Error details:', error.stack);
+    return false;
   }
+}
+
+// Test function to simulate a POST request
+function testPostRequest() {
+  console.log('=== TESTING POST REQUEST ===');
+  
+  // Simulate the event object that would come from a form submission
+  const mockEvent = {
+    postData: {
+      contents: JSON.stringify({
+        name: 'Test User',
+        email: 'test@example.com',
+        phone: '555-0123',
+        message: 'Test message from POST simulation',
+        type: 'Contact'
+      })
+    }
+  };
+  
+  const result = doPost(mockEvent);
+  console.log('POST test result:', result.getContent());
+  
+  return result;
 }
