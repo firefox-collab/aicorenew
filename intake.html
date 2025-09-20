@@ -64,18 +64,32 @@
         }
 
         .logo-image {
-            width: 50px;
-            height: 50px;
-            animation: logoFloat 3s ease-in-out infinite, logoRotate 8s linear infinite, logoPulse 2s ease-in-out infinite;
+            width: 60px;
+            height: 60px;
+            animation: logoFloat 3s ease-in-out infinite, logoRotate 12s linear infinite, logoPulse 2s ease-in-out infinite, logoGlitch 8s ease-in-out infinite;
             transition: transform 0.3s ease;
-            filter: drop-shadow(0 0 15px rgba(39, 174, 96, 0.7)) drop-shadow(0 0 30px rgba(52, 152, 219, 0.4));
+            filter: 
+                drop-shadow(0 0 20px rgba(39, 174, 96, 0.8)) 
+                drop-shadow(0 0 40px rgba(52, 152, 219, 0.6))
+                drop-shadow(0 0 60px rgba(255, 255, 255, 0.4))
+                brightness(1.2)
+                contrast(1.1);
             position: relative;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(39, 174, 96, 0.1) 0%, transparent 70%);
         }
 
         .logo-image:hover {
-            transform: scale(1.3) rotate(360deg);
-            filter: drop-shadow(0 0 25px rgba(39, 174, 96, 1)) drop-shadow(0 0 50px rgba(52, 152, 219, 0.8)) drop-shadow(0 0 75px rgba(255, 255, 255, 0.6));
-            animation-duration: 1s, 0.5s, 0.8s;
+            transform: scale(1.4) rotate(360deg);
+            filter: 
+                drop-shadow(0 0 30px rgba(39, 174, 96, 1)) 
+                drop-shadow(0 0 60px rgba(52, 152, 219, 1))
+                drop-shadow(0 0 90px rgba(255, 255, 255, 0.8))
+                drop-shadow(0 0 120px rgba(46, 204, 113, 0.6))
+                brightness(1.5)
+                contrast(1.3)
+                hue-rotate(10deg);
+            animation-duration: 0.8s, 0.3s, 0.6s, 2s;
         }
 
         .logo-text {
@@ -111,12 +125,29 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 80px;
-            height: 80px;
-            border: 2px solid rgba(39, 174, 96, 0.3);
+            width: 100px;
+            height: 100px;
+            border: 3px solid transparent;
+            background: linear-gradient(45deg, rgba(39, 174, 96, 0.4), rgba(52, 152, 219, 0.4), rgba(46, 204, 113, 0.4)) border-box;
+            mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            animation: logoRing 4s linear infinite;
+            animation: logoRing 6s linear infinite, ringPulse 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .logo-container::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 120px;
+            height: 120px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: logoRing 8s linear infinite reverse, outerRingGlow 4s ease-in-out infinite;
             pointer-events: none;
         }
 
@@ -137,17 +168,37 @@
             0% {
                 transform: rotate(0deg);
             }
-            25% {
-                transform: rotate(90deg);
-            }
-            50% {
-                transform: rotate(180deg);
-            }
-            75% {
-                transform: rotate(270deg);
-            }
             100% {
                 transform: rotate(360deg);
+            }
+        }
+
+        @keyframes logoGlitch {
+            0%, 90%, 100% {
+                filter: 
+                    drop-shadow(0 0 20px rgba(39, 174, 96, 0.8)) 
+                    drop-shadow(0 0 40px rgba(52, 152, 219, 0.6))
+                    drop-shadow(0 0 60px rgba(255, 255, 255, 0.4))
+                    brightness(1.2)
+                    contrast(1.1);
+            }
+            91%, 93% {
+                filter: 
+                    drop-shadow(2px 0 0 rgba(255, 0, 0, 0.8))
+                    drop-shadow(-2px 0 0 rgba(0, 255, 255, 0.8))
+                    drop-shadow(0 0 20px rgba(39, 174, 96, 0.8))
+                    brightness(1.5)
+                    contrast(1.3)
+                    hue-rotate(180deg);
+            }
+            92% {
+                filter: 
+                    drop-shadow(-2px 0 0 rgba(255, 0, 0, 0.8))
+                    drop-shadow(2px 0 0 rgba(0, 255, 255, 0.8))
+                    drop-shadow(0 0 30px rgba(52, 152, 219, 1))
+                    brightness(1.8)
+                    contrast(1.5)
+                    hue-rotate(-90deg);
             }
         }
 
@@ -202,15 +253,37 @@
         @keyframes logoRing {
             0% {
                 transform: translate(-50%, -50%) rotate(0deg) scale(1);
-                opacity: 0.3;
+                opacity: 0.4;
             }
             50% {
                 transform: translate(-50%, -50%) rotate(180deg) scale(1.2);
-                opacity: 0.6;
+                opacity: 0.8;
             }
             100% {
                 transform: translate(-50%, -50%) rotate(360deg) scale(1);
-                opacity: 0.3;
+                opacity: 0.4;
+            }
+        }
+
+        @keyframes ringPulse {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(39, 174, 96, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(52, 152, 219, 0.6);
+            }
+        }
+
+        @keyframes outerRingGlow {
+            0%, 100% {
+                box-shadow: 
+                    0 0 30px rgba(255, 255, 255, 0.2),
+                    inset 0 0 20px rgba(39, 174, 96, 0.1);
+            }
+            50% {
+                box-shadow: 
+                    0 0 50px rgba(52, 152, 219, 0.4),
+                    inset 0 0 30px rgba(46, 204, 113, 0.2);
             }
         }
 
@@ -513,7 +586,7 @@
         <div class="header">
             <nav>
                 <div class="logo-container">
-                    <img src="Artboard 1 (3).png" alt="AI Core IT Solutions Logo" class="logo-image">
+                    <img src="aicore_logo_bw_highres.png" alt="AI Core IT Solutions Logo" class="logo-image">
                     <div class="logo-text">AI CORE IT SOLUTIONS</div>
                 </div>
                 <ul class="nav-links">
