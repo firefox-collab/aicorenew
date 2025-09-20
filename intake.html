@@ -655,17 +655,12 @@
                 
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
+                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(data)
                 });
-                
-                const result = await response.json();
-                
-                if (result.status === 'error') {
-                    throw new Error(result.message);
-                }
                 
                 // Show success message
                 alert(`${formType === 'appointment' ? 'Appointment' : 'Intake form'} submitted successfully!\n\nWe will contact you shortly to confirm your ${formType === 'appointment' ? 'appointment' : 'information'}.`);
@@ -675,7 +670,7 @@
                 
             } catch (error) {
                 console.error('Error submitting form:', error);
-                alert('There was an error submitting your form: ' + error.message + '\n\nPlease try again or contact us directly.');
+                alert('There was an error submitting your form. Please try again or contact us directly.');
             } finally {
                 // Reset button state
                 submitBtn.textContent = originalText;
