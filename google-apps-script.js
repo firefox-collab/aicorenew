@@ -1,349 +1,173 @@
+// Google Apps Script code to handle form submissions
+// This code should be deployed as a web app in Google Apps Script
+
 function doPost(e) {
-  console.log('=== INCOMING REQUEST DEBUG ===');
-  console.log('Event object:', JSON.stringify(e, null, 2));
-  
   try {
-    // Check if we have any event object at all
-    if (!e) {
-      console.error('No event object received');
-      return createErrorResponse('No request data received');
-    }
-    
-    let data = null;
-    let dataSource = 'unknown';
-    
-    // Method 1: Check if data is in parameters (GET-style parameters)
-    if (e.parameter && Object.keys(e.parameter).length > 0) {
-      console.log('Found data in parameters');
-      data = e.parameter;
-      dataSource = 'parameters';
-    }
-    
-    // Method 2: Check postData if it exists
-    else if (e.postData) {
-      console.log('Found postData object');
-      
-      if (e.postData.contents) {
-        console.log('Found data in postData.contents');
-        try {
-          data = JSON.parse(e.postData.contents);
-          dataSource = 'postData.contents';
-        } catch (parseError) {
-          console.error('Failed to parse postData.contents:', parseError);
-          console.log('Raw postData.contents:', e.postData.contents);
-        }
-      }
-      
-      if (!data && typeof e.postData.getDataAsString === 'function') {
-        console.log('Trying postData.getDataAsString()');
-        try {
-          const dataString = e.postData.getDataAsString();
-          console.log('Raw data string:', dataString);
-          data = JSON.parse(dataString);
-          dataSource = 'postData.getDataAsString()';
-        } catch (parseError) {
-          console.error('Failed to parse getDataAsString():', parseError);
-        }
-      }
-    }
-    
-    // Method 3: Try to parse the entire event as data (fallback)
-    if (!data && e.name) {
-      console.log('Using event object directly as data');
-      data = e;
-      dataSource = 'direct';
-    }
-    
-    // If still no data, create a test entry
-    if (!data) {
-      console.log('No data found, creating test entry');
-      data = {
-        name: 'Test Submission',
-        email: 'test@example.com',
-        phone: '555-0123',
-        message: 'Test message - no data received from form',
-        type: 'Contact'
-      };
-      dataSource = 'fallback';
-    }
-    
-    console.log('Data source:', dataSource);
-    console.log('Final data:', JSON.stringify(data, null, 2));
-    
-    // Validate required fields (be flexible with test data)
-    if (!data.name && !data.email) {
-      console.error('Missing required fields');
-      return createErrorResponse('Missing required fields: name and email are required');
-    }
+    // Parse the incoming data
+    const data = JSON.parse(e.postData.contents);
     
     // Get or create the spreadsheet
     const spreadsheetId = 'YOUR_SPREADSHEET_ID'; // Replace with your Google Sheets ID
+    const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
     
-    if (spreadsheetId === 'YOUR_SPREADSHEET_ID') {
-      console.error('Spreadsheet ID not configured');
-      return createErrorResponse('Please replace YOUR_SPREADSHEET_ID with your actual Google Sheets ID in the script');
-    }
-    
-    let spreadsheet;
-    try {
-      spreadsheet = SpreadsheetApp.openById(spreadsheetId);
-      console.log('Successfully opened spreadsheet:', spreadsheet.getName());
-    } catch (spreadsheetError) {
-      console.error('Failed to open spreadsheet:', spreadsheetError);
-      return createErrorResponse('Failed to open spreadsheet. Please check the spreadsheet ID: ' + spreadsheetError.toString());
-    }
-    
-    // Determine form type and process accordingly
-    const formType = data.type || 'Contact';
-    console.log('Processing form type:', formType);
-    
+    // Determine which sheet to use based on form type
     let sheet;
-    try {
-      if (formType === 'Appointment') {
-        sheet = getOrCreateSheet(spreadsheet, 'Appointments');
-        setupAppointmentHeaders(sheet);
-        appendAppointmentData(sheet, data);
-      } else if (formType === 'Intake') {
-        sheet = getOrCreateSheet(spreadsheet, 'Intake Forms');
-        setupIntakeHeaders(sheet);
-        appendIntakeData(sheet, data);
-      } else {
-        sheet = getOrCreateSheet(spreadsheet, 'Contact Forms');
-        setupContactHeaders(sheet);
-        appendContactData(sheet, data);
-      }
-      
-      console.log('Successfully processed data for sheet:', sheet.getName());
-      
-    } catch (sheetError) {
-      console.error('Error processing sheet operations:', sheetError);
-      return createErrorResponse('Error saving to spreadsheet: ' + sheetError.toString());
+    if (data.type === 'Appointment') {
+      sheet = getOrCreateSheet(spreadsheet, 'Appointments');
+      setupAppointmentHeaders(sheet);
+      appendAppointmentData(sheet, data);
+    } else if (data.type === 'Intake') {
+      sheet = getOrCreateSheet(spreadsheet, 'Intake Forms');
+      setupIntakeHeaders(sheet);
+      appendIntakeData(sheet, data);
     }
     
-    return createSuccessResponse('Data saved successfully to ' + sheet.getName() + ' (Source: ' + dataSource + ')');
-    
+    return ContentService
+      .createTextOutput(JSON.stringify({status: 'success', message: 'Data saved successfully'}))
+      .setMimeType(ContentService.MimeType.JSON);
+      
   } catch (error) {
-    console.error('Unexpected error in doPost:', error);
-    console.error('Error stack:', error.stack);
-    return createErrorResponse('Unexpected error: ' + error.toString());
+    console.error('Error processing form submission:', error);
+    return ContentService
+      .createTextOutput(JSON.stringify({status: 'error', message: error.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
   }
-}
-
-function doGet(e) {
-  console.log('=== GET REQUEST DEBUG ===');
-  console.log('GET parameters:', e ? e.parameter : 'No event object');
-  
-  return ContentService
-    .createTextOutput(JSON.stringify({
-      status: 'success',
-      message: 'Google Apps Script is working! Use POST requests to submit form data.',
-      timestamp: new Date().toISOString(),
-      receivedParams: e ? Object.keys(e.parameter || {}) : []
-    }))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-
-function createSuccessResponse(message) {
-  return ContentService
-    .createTextOutput(JSON.stringify({
-      status: 'success',
-      message: message,
-      timestamp: new Date().toISOString()
-    }))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-
-function createErrorResponse(message) {
-  return ContentService
-    .createTextOutput(JSON.stringify({
-      status: 'error',
-      message: message,
-      timestamp: new Date().toISOString()
-    }))
-    .setMimeType(ContentService.MimeType.JSON);
 }
 
 function getOrCreateSheet(spreadsheet, sheetName) {
   let sheet = spreadsheet.getSheetByName(sheetName);
   if (!sheet) {
-    console.log('Creating new sheet:', sheetName);
     sheet = spreadsheet.insertSheet(sheetName);
   }
   return sheet;
 }
 
-function setupContactHeaders(sheet) {
-  if (sheet.getLastRow() === 0) {
-    console.log('Setting up contact headers');
-    const headers = ['Timestamp', 'Name', 'Email', 'Phone', 'Message', 'Source'];
-    sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
-    
-    const headerRange = sheet.getRange(1, 1, 1, headers.length);
-    headerRange.setFontWeight('bold');
-    headerRange.setBackground('#00ffff');
-    headerRange.setFontColor('#000000');
-    
-    sheet.autoResizeColumns(1, headers.length);
-  }
-}
-
 function setupAppointmentHeaders(sheet) {
+  // Check if headers already exist
   if (sheet.getLastRow() === 0) {
-    console.log('Setting up appointment headers');
-    const headers = ['Timestamp', 'Name', 'Email', 'Phone', 'Date', 'Time', 'Services', 'Message', 'Source'];
+    const headers = [
+      'Timestamp',
+      'Name',
+      'Email',
+      'Phone',
+      'Appointment Date',
+      'Appointment Time',
+      'Services',
+      'Message'
+    ];
     sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
     
+    // Format headers
     const headerRange = sheet.getRange(1, 1, 1, headers.length);
     headerRange.setFontWeight('bold');
-    headerRange.setBackground('#00ffff');
-    headerRange.setFontColor('#000000');
-    
-    sheet.autoResizeColumns(1, headers.length);
+    headerRange.setBackground('#27ae60');
+    headerRange.setFontColor('white');
   }
 }
 
 function setupIntakeHeaders(sheet) {
+  // Check if headers already exist
   if (sheet.getLastRow() === 0) {
-    console.log('Setting up intake headers');
     const headers = [
-      'Timestamp', 'Name', 'Email', 'Services', 'Company Size', 
-      'Communication Method', 'Timeline', 'Budget', 'Infrastructure', 
-      'Challenges', 'Interested Services', 'Comments', 'Source'
+      'Timestamp',
+      'Name',
+      'Email',
+      'Services Interested',
+      'Company Size',
+      'Communication Method',
+      'Project Timeline',
+      'Budget Range',
+      'Current Infrastructure',
+      'Challenges',
+      'Interested Services',
+      'Additional Comments'
     ];
     sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
     
+    // Format headers
     const headerRange = sheet.getRange(1, 1, 1, headers.length);
     headerRange.setFontWeight('bold');
-    headerRange.setBackground('#00ffff');
-    headerRange.setFontColor('#000000');
-    
-    sheet.autoResizeColumns(1, headers.length);
+    headerRange.setBackground('#27ae60');
+    headerRange.setFontColor('white');
   }
 }
 
-function appendContactData(sheet, data) {
-  console.log('Appending contact data');
+function appendAppointmentData(sheet, data) {
   const row = [
-    new Date(),
-    data.name || '',
-    data.email || '',
-    data.phone || '',
-    data.message || '',
-    'Web Form'
+    new Date(data.timestamp),
+    data.name,
+    data.email,
+    data.phone,
+    data.date,
+    data.time,
+    data.services,
+    data.message
   ];
   
   sheet.appendRow(row);
+  
+  // Auto-resize columns
   sheet.autoResizeColumns(1, row.length);
 }
 
-function appendAppointmentData(sheet, data) {
-  console.log('Appending appointment data');
+function appendContactData(sheet, data) {
   const row = [
-    new Date(),
-    data.name || '',
-    data.email || '',
-    data.phone || '',
-    data.date || '',
-    data.time || '',
-    data.services || '',
-    data.message || '',
-    'Web Form'
+    new Date(data.timestamp),
+    data.name,
+    data.email,
+    data.phone,
+    data.message
   ];
   
   sheet.appendRow(row);
+  
+  // Auto-resize columns
   sheet.autoResizeColumns(1, row.length);
 }
 
 function appendIntakeData(sheet, data) {
-  console.log('Appending intake data');
   const row = [
-    new Date(),
-    data.name || '',
-    data.email || '',
-    data.services || '',
-    data.companySize || '',
-    data.communicationMethod || '',
-    data.projectTimeline || '',
-    data.budgetRange || '',
-    data.currentInfrastructure || '',
-    data.challenges || '',
-    data.interestedServices || '',
-    data.additionalComments || '',
-    'Web Form'
+    new Date(data.timestamp),
+    data.name,
+    data.email,
+    data.services,
+    data.companySize,
+    data.communicationMethod,
+    data.projectTimeline,
+    data.budgetRange,
+    data.currentInfrastructure,
+    data.challenges,
+    data.interestedServices,
+    data.additionalComments
   ];
   
   sheet.appendRow(row);
+  
+  // Auto-resize columns
   sheet.autoResizeColumns(1, row.length);
 }
 
-// Enhanced test function
-function testSetup() {
-  console.log('=== TESTING SETUP ===');
+// Optional: Function to send email notifications
+function sendEmailNotification(data) {
+  const subject = `New ${data.type} Submission - ${data.name}`;
+  const body = `
+    New ${data.type.toLowerCase()} submission received:
+    
+    Name: ${data.name}
+    Email: ${data.email}
+    ${data.phone ? `Phone: ${data.phone}` : ''}
+    ${data.date ? `Date: ${data.date}` : ''}
+    ${data.time ? `Time: ${data.time}` : ''}
+    
+    Please check the Google Sheet for full details.
+  `;
   
-  const spreadsheetId = 'YOUR_SPREADSHEET_ID';
-  
-  if (spreadsheetId === 'YOUR_SPREADSHEET_ID') {
-    console.log('❌ ERROR: Please replace YOUR_SPREADSHEET_ID with your actual Google Sheets ID');
-    return false;
-  }
+  // Replace with your email
+  const emailAddress = 'your-email@example.com';
   
   try {
-    // Test spreadsheet access
-    const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
-    console.log('✅ SUCCESS: Connected to spreadsheet:', spreadsheet.getName());
-    
-    // Test sheet creation and headers
-    const contactSheet = getOrCreateSheet(spreadsheet, 'Contact Forms');
-    setupContactHeaders(contactSheet);
-    console.log('✅ SUCCESS: Contact sheet ready');
-    
-    const appointmentSheet = getOrCreateSheet(spreadsheet, 'Appointments');
-    setupAppointmentHeaders(appointmentSheet);
-    console.log('✅ SUCCESS: Appointment sheet ready');
-    
-    const intakeSheet = getOrCreateSheet(spreadsheet, 'Intake Forms');
-    setupIntakeHeaders(intakeSheet);
-    console.log('✅ SUCCESS: Intake sheet ready');
-    
-    // Test data submission
-    const testData = {
-      name: 'Test User',
-      email: 'test@example.com',
-      phone: '555-0123',
-      message: 'Test message from setup function',
-      type: 'Contact'
-    };
-    
-    appendContactData(contactSheet, testData);
-    console.log('✅ SUCCESS: Test data added to Contact Forms sheet');
-    
-    console.log('🎉 All tests passed! Your setup is working correctly.');
-    return true;
-    
+    MailApp.sendEmail(emailAddress, subject, body);
   } catch (error) {
-    console.log('❌ ERROR:', error.toString());
-    console.log('Error details:', error.stack);
-    return false;
+    console.error('Error sending email notification:', error);
   }
-}
-
-// Test function to simulate a POST request with fallback data
-function testPostRequest() {
-  console.log('=== TESTING POST REQUEST ===');
-  
-  // Simulate the event object that would come from a form submission
-  const mockEvent = {
-    parameter: {
-      name: 'Test User from POST',
-      email: 'testpost@example.com',
-      phone: '555-0456',
-      message: 'Test message from POST simulation',
-      type: 'Contact'
-    }
-  };
-  
-  const result = doPost(mockEvent);
-  console.log('POST test result:', result.getContent());
-  
-  return result;
 }
