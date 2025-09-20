@@ -52,30 +52,14 @@
         .logo-image {
             width: 50px;
             height: 50px;
-            border-radius: 8px;
-            animation: logoFloat 3s ease-in-out infinite, logoHologram 2s ease-in-out infinite, logoScan 4s linear infinite;
+            animation: logoFloat 3s ease-in-out infinite, logoRotate 10s linear infinite;
             transition: transform 0.3s ease;
-            filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.8)) drop-shadow(0 0 30px rgba(138, 43, 226, 0.4));
-            position: relative;
-            overflow: hidden;
-        }
-
-        .logo-image::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(0, 255, 255, 0.3), transparent);
-            animation: logoSweep 3s linear infinite;
-            pointer-events: none;
+            filter: drop-shadow(0 0 10px rgba(39, 174, 96, 0.5));
         }
 
         .logo-image:hover {
-            transform: scale(1.15) rotateY(15deg);
-            filter: drop-shadow(0 0 25px rgba(0, 255, 255, 1)) drop-shadow(0 0 50px rgba(138, 43, 226, 0.8));
-            animation: logoFloat 3s ease-in-out infinite, logoHologram 1s ease-in-out infinite, logoGlitch 0.5s ease-in-out infinite;
+            transform: scale(1.2) rotate(15deg);
+            filter: drop-shadow(0 0 20px rgba(39, 174, 96, 0.8));
         }
 
         .logo-text {
@@ -83,94 +67,38 @@
             font-size: 24px;
             font-weight: 700;
             letter-spacing: 2px;
-            animation: textGlow 2s ease-in-out infinite alternate, textShimmer 3s ease-in-out infinite, textPulse 4s ease-in-out infinite;
-            background: linear-gradient(45deg, #00ffff, #8a2be2, #00ff00, #ff00ff, #00ffff);
+            animation: logoGlow 2s ease-in-out infinite alternate, textShimmer 3s ease-in-out infinite;
+            background: linear-gradient(45deg, #fff, #27ae60, #fff);
             background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(138, 43, 226, 0.6);
-            position: relative;
-        }
-
-        .logo-text::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #00ffff, #8a2be2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            opacity: 0;
-            animation: textGlitch 3s ease-in-out infinite;
         }
 
         @keyframes logoFloat {
             0%, 100% {
-                transform: translateY(0px) rotateX(0deg);
+                transform: translateY(0px);
             }
             50% {
-                transform: translateY(-8px) rotateX(5deg);
+                transform: translateY(-10px);
             }
         }
 
-        @keyframes logoHologram {
+        @keyframes logoRotate {
             0% {
-                filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.8)) drop-shadow(0 0 30px rgba(138, 43, 226, 0.4));
-                opacity: 1;
-            }
-            50% {
-                filter: drop-shadow(0 0 25px rgba(0, 255, 255, 1)) drop-shadow(0 0 50px rgba(138, 43, 226, 0.8));
-                opacity: 0.8;
+                transform: rotate(0deg);
             }
             100% {
-                filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.8)) drop-shadow(0 0 30px rgba(138, 43, 226, 0.4));
-                opacity: 1;
+                transform: rotate(360deg);
             }
         }
 
-        @keyframes logoScan {
+        @keyframes logoGlow {
             0% {
-                box-shadow: inset 0 0 0 0 rgba(0, 255, 255, 0.2);
-            }
-            50% {
-                box-shadow: inset 0 0 20px 5px rgba(0, 255, 255, 0.4);
+                text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
             }
             100% {
-                box-shadow: inset 0 0 0 0 rgba(0, 255, 255, 0.2);
-            }
-        }
-
-        @keyframes logoSweep {
-            0% {
-                transform: translateX(-100%) translateY(-100%) rotate(45deg);
-            }
-            100% {
-                transform: translateX(100%) translateY(100%) rotate(45deg);
-            }
-        }
-
-        @keyframes logoGlitch {
-            0%, 100% {
-                transform: scale(1.15) rotateY(15deg);
-            }
-            25% {
-                transform: scale(1.18) rotateY(18deg) skewX(2deg);
-            }
-            75% {
-                transform: scale(1.12) rotateY(12deg) skewX(-2deg);
-            }
-        }
-
-        @keyframes textGlow {
-            0% {
-                text-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(138, 43, 226, 0.6);
-            }
-            100% {
-                text-shadow: 0 0 30px rgba(0, 255, 255, 1), 0 0 60px rgba(138, 43, 226, 0.8), 0 0 80px rgba(0, 255, 0, 0.4);
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.6);
             }
         }
 
@@ -180,25 +108,6 @@
             }
             50% {
                 background-position: 100% 50%;
-            }
-        }
-
-        @keyframes textPulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.02);
-            }
-        }
-
-        @keyframes textGlitch {
-            0%, 90%, 100% {
-                opacity: 0;
-            }
-            5%, 10% {
-                opacity: 0.8;
-                transform: translateX(2px);
             }
         }
         .nav-links {
@@ -710,9 +619,9 @@
         .cta-section {
             padding: 80px 0 60px 0;
             background: 
-                linear-gradient(135deg, rgba(0, 255, 255, 0.2) 0%, rgba(0, 0, 0, 0.9) 100%),
-                radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(138, 43, 226, 0.3) 0%, transparent 50%),
+                linear-gradient(135deg, rgba(39, 174, 96, 0.9) 0%, rgba(0, 0, 0, 0.8) 100%),
+                radial-gradient(circle at 20% 80%, rgba(39, 174, 96, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(52, 152, 219, 0.3) 0%, transparent 50%),
                 url('https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop') center/cover;
             text-align: center;
             position: relative;
@@ -727,8 +636,8 @@
             right: 0;
             bottom: 0;
             background: 
-                linear-gradient(45deg, transparent 30%, rgba(0, 255, 255, 0.2) 50%, transparent 70%),
-                linear-gradient(-45deg, transparent 30%, rgba(138, 43, 226, 0.2) 50%, transparent 70%);
+                linear-gradient(45deg, transparent 30%, rgba(39, 174, 96, 0.1) 50%, transparent 70%),
+                linear-gradient(-45deg, transparent 30%, rgba(52, 152, 219, 0.1) 50%, transparent 70%);
             animation: gradientShift 8s ease-in-out infinite;
             pointer-events: none;
         }
@@ -740,7 +649,7 @@
             font-weight: 600;
             position: relative;
             z-index: 2;
-            background: linear-gradient(45deg, #00ffff, #8a2be2, #00ff00, #ff00ff, #00ffff);
+            background: linear-gradient(45deg, #fff, #27ae60, #3498db, #fff);
             background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -1180,129 +1089,6 @@
                 typeWriter(heroSubtitle, 'Innovative IT solutions for growth', 60);
             }, 2500);
         });
-
-        // Form submission
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(this);
-            const name = formData.get('name');
-            const email = formData.get('email');
-            const phone = formData.get('phone');
-            const message = formData.get('message');
-            const consent = formData.get('consent');
-            
-            // Validate required fields
-            if (!name || !email || !phone || !consent) {
-                alert('Please fill in all required fields and accept the consent checkbox.');
-                return;
-            }
-            
-            // Prepare contact data
-            const contactData = {
-                timestamp: new Date().toISOString(),
-                name: name,
-                email: email,
-                phone: phone,
-                message: message || '',
-                type: 'Contact'
-            };
-            
-            // Submit to Google Sheets (or show success message if not configured)
-            submitContactForm(contactData);
-        });
-        
-        // Function to handle contact form submission
-        async function submitContactForm(data) {
-            const submitBtn = document.querySelector('.submit-btn');
-            const originalText = submitBtn.textContent;
-            
-            try {
-                // Show loading state
-                submitBtn.textContent = 'Submitting...';
-                submitBtn.disabled = true;
-                
-                // Check if Google Apps Script is configured
-                const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
-                
-                if (GOOGLE_SCRIPT_URL.includes('YOUR_SCRIPT_ID') || GOOGLE_SCRIPT_URL.includes('/dev')) {
-                    // Google Sheets not configured yet - show success message anyway
-                    // Show success message without network request
-                    alert('Thank you for your message!\n\nYour contact information has been received. We will get back to you shortly.\n\nNote: To enable automatic data saving, please configure Google Sheets integration following the setup instructions.');
-                    
-                    // Reset form
-                    document.querySelector('.contact form').reset();
-                    
-                    // Reset button state
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                    return;
-                }
-                
-                // This code will only run if you have a properly configured Google Apps Script URL
-                try {
-                    console.log('Submitting data to Google Sheets:', data);
-                    console.log('Request URL:', GOOGLE_SCRIPT_URL);
-                    console.log('Request payload:', JSON.stringify(data));
-                    
-                    const response = await fetch(GOOGLE_SCRIPT_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(data)
-                    });
-                    
-                    console.log('Response status:', response.status);
-                    console.log('Response ok:', response.ok);
-                    
-                    const responseText = await response.text();
-                    console.log('Response text:', responseText);
-                    
-                    let result;
-                    try {
-                        result = JSON.parse(responseText);
-                    } catch (parseError) {
-                        console.error('Failed to parse response as JSON:', parseError);
-                        throw new Error('Invalid response format from server');
-                    }
-                    
-                    console.log('Parsed result:', result);
-                    
-                    if (result.status === 'error') {
-                        throw new Error(result.message);
-                    }
-                    
-                    // Show success message
-                    alert('Thank you for your message!\n\nYour contact information has been submitted successfully. We will get back to you shortly.');
-                    
-                    // Reset form
-                    document.querySelector('.contact form').reset();
-                    
-                } catch (fetchError) {
-                    console.error('Network error:', fetchError);
-                    // Show success message even on network error to avoid user confusion
-                    alert('Thank you for your message!\n\nYour contact information has been received. We will get back to you shortly.\n\nNote: If you want to enable automatic data saving, please configure Google Sheets integration.');
-                    
-                    // Reset form even on error
-                    document.querySelector('.contact form').reset();
-                }
-                
-            } catch (error) {
-                console.error('Error submitting contact form:', error);
-                
-                // Show user-friendly success message instead of error
-                alert('Thank you for your message!\n\nYour information has been received. We will contact you shortly.');
-                
-                // Reset form even on error
-                document.querySelector('.contact form').reset();
-            } finally {
-                // Reset button state
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }
-        }
     </script>
 </body>
 </html>
