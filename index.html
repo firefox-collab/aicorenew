@@ -406,6 +406,9 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 6px 20px rgba(39, 174, 96, 0.3);
+            min-width: 160px;
+            text-align: center;
+            white-space: nowrap;
         }
 
         .cta-btn::before {
@@ -823,12 +826,18 @@
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
+                gap: 15px;
+                width: 100%;
             }
 
             .cta-btn {
                 width: 100%;
                 max-width: 300px;
                 text-align: center;
+                padding: 15px 25px;
+                font-size: 16px;
+                min-width: auto;
+                white-space: normal;
             }
 
             .container {
@@ -893,12 +902,61 @@
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
+                gap: 15px;
+                width: 100%;
             }
 
             .cta-btn {
                 width: 100%;
                 max-width: 300px;
                 text-align: center;
+                padding: 15px 25px;
+                font-size: 16px;
+                min-width: auto;
+                white-space: normal;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+                line-height: 1.1;
+            }
+
+            .hero p {
+                font-size: 1rem;
+                margin-bottom: 25px;
+            }
+
+            .hero-content {
+                padding: 0 15px;
+            }
+
+            .cta-buttons {
+                gap: 12px;
+            }
+
+            .cta-btn {
+                padding: 12px 20px;
+                font-size: 14px;
+                max-width: 280px;
+                border-radius: 20px;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+
+            .contact-form {
+                padding: 25px 15px;
+            }
+
+            .cta-content h2 {
+                font-size: 1.8rem;
+            }
+
+            .cta-content p {
+                font-size: 1rem;
             }
         }
     </style>
