@@ -1078,6 +1078,26 @@
             });
         });
 
+        // Handle all navigation links including cross-page navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                
+                // If it's an anchor link on the same page
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        updateActiveNavigation(href);
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+                // For other links, let them navigate normally
+            });
+        });
         // Update active navigation based on current section
         function updateActiveNavigation(activeSection) {
             document.querySelectorAll('.nav-link').forEach(link => {
@@ -1093,7 +1113,7 @@
         // Intersection Observer for automatic navigation highlighting
         const observerOptions = {
             root: null,
-            rootMargin: '-20% 0px -70% 0px',
+            rootMargin: '-10% 0px -80% 0px',
             threshold: 0
         };
 
@@ -1115,6 +1135,17 @@
             
             // Set initial active state
             updateActiveNavigation('#home');
+            
+            // Add click handlers for better responsiveness
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.style.cursor = 'pointer';
+                link.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                });
+                link.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
         });
         // Header background change on scroll
         window.addEventListener('scroll', function() {
