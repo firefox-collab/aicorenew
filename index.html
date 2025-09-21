@@ -1165,20 +1165,86 @@
         });
 
         // Handle contact button separately
-        document.querySelector('.contact-btn').addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            
-            if (href.startsWith('#')) {
-                e.preventDefault();
-                const target = document.querySelector(href);
-                if (target) {
-                    updateActiveNavigation(href);
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+        // Enhanced navigation for all header links
+        document.querySelectorAll('.nav-link, .contact-btn').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                console.log('Navigation clicked:', href);
+                
+                // Add visual feedback
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+                
+                // Handle different types of links
+                if (href === 'home') {
+                    e.preventDefault();
+                    // Scroll to top of page
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
                     });
+                    updateActiveNavigation('#home');
+                } else if (href === 'about') {
+                    e.preventDefault();
+                    const target = document.querySelector('#about');
+                    if (target) {
+                        updateActiveNavigation('#about');
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                } else if (href === 'services') {
+                    e.preventDefault();
+                    const target = document.querySelector('#services');
+                    if (target) {
+                        updateActiveNavigation('#services');
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                } else if (href === '#contact' || href === 'contact') {
+                    e.preventDefault();
+                    const target = document.querySelector('#contact');
+                    if (target) {
+                        updateActiveNavigation('#contact');
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                } else if (href.startsWith('#')) {
+                    // Handle other anchor links
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        updateActiveNavigation(href);
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
                 }
-            }
+                // For external links or other pages, let them navigate normally
+            });
+            
+            // Add hover effects for better user feedback
+            link.addEventListener('mouseenter', function() {
+                if (!this.classList.contains('contact-btn')) {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 6px 20px rgba(255, 255, 255, 0.3)';
+                }
+            });
+            
+            link.addEventListener('mouseleave', function() {
+                if (!this.classList.contains('contact-btn')) {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'none';
+                }
+            });
         });
         
         // Update active navigation based on current section
@@ -1187,7 +1253,18 @@
                 link.classList.remove('active');
             });
             
-            const activeLink = document.querySelector(`a[href="${activeSection}"]`);
+            // Find the corresponding nav link for the active section
+            let activeLink = null;
+            if (activeSection === '#home') {
+                activeLink = document.querySelector('a[href="home"]');
+            } else if (activeSection === '#about') {
+                activeLink = document.querySelector('a[href="about"]');
+            } else if (activeSection === '#services') {
+                activeLink = document.querySelector('a[href="services"]');
+            } else {
+                activeLink = document.querySelector(`a[href="${activeSection}"]`);
+            }
+            
             if (activeLink) {
                 activeLink.classList.add('active');
             }
@@ -1218,17 +1295,6 @@
             
             // Set initial active state
             updateActiveNavigation('#home');
-            
-            // Add click handlers for better responsiveness
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.style.cursor = 'pointer';
-                link.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-2px)';
-                });
-                link.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                });
-            });
         });
         // Header background change on scroll
         window.addEventListener('scroll', function() {
