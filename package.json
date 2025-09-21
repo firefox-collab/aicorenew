@@ -4,7 +4,7 @@
   "description": "A modern static website",
   "main": "index.html",
   "scripts": {
-    "dev": "http-server . -p 8000",
+    "dev": "http-server . -p 8000 -o",
     "start": "http-server . -p 8000"
   },
   "keywords": [
